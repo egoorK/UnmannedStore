@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Features\Accounts\Commands\UpdateAccount\" />
+    <Folder Include="Features\Accounts\Commands\DeleteAccount\" />
+    <Folder Include="Features\Accounts\Queries\GetAccounts\" />
+    <Folder Include="Features\Accounts\Queries\GetAccountById\" />
+    <Folder Include="Features\UserDevices\Commands\DeleteUserDevice\" />
+    <Folder Include="Features\UserDevices\Commands\UpdateUserDevice\" />
+    <Folder Include="Features\UserDevices\Commands\CreateUserDevice\" />
+    <Folder Include="Features\UserDevices\Queries\GetUserDeviceById\" />
+    <Folder Include="Features\UserDevices\Queries\GetUserDevices\" />
+  </ItemGroup>
+
+</Project>
