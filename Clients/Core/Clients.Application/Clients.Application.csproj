@@ -5,8 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Accounts\Commands\UpdateAccount\" />
-    <Folder Include="Features\Accounts\Commands\DeleteAccount\" />
     <Folder Include="Features\Accounts\Queries\GetAccounts\" />
     <Folder Include="Features\Accounts\Queries\GetAccountById\" />
     <Folder Include="Features\UserDevices\Commands\DeleteUserDevice\" />
