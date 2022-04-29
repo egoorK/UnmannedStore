@@ -1,10 +1,10 @@
 ﻿using System;
+using MediatR;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Clients.Application.Features.Accounts.Commands.CreateAccount
 {
-    class CreateAccountCommand
+    public class CreateAccountCommand : IRequest<Guid>  // Запрос с ответом GUID
     {
         public string Username { get; set; }
         public string Email { get; set; }

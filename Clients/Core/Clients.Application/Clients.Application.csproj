@@ -14,4 +14,13 @@
     <Folder Include="Features\UserDevices\Queries\GetUserDevices\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="10.0.1" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Clients.Domain\Clients.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
