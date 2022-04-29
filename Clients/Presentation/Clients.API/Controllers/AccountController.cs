@@ -8,9 +8,8 @@ using System.Threading.Tasks;
 using Clients.Application.Features.Accounts.Commands.CreateAccount;
 using Clients.Application.Features.Accounts.Commands.UpdateAccount;
 using Clients.Application.Features.Accounts.Commands.DeleteAccount;
-
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using Clients.Application.Features.Accounts.Queries.GetAccountById;
+using Clients.Application.Features.Accounts.Queries.GetAccounts;
 
 namespace Clients.API.Controllers
 {
@@ -36,13 +35,14 @@ namespace Clients.API.Controllers
         }
 
         // GET api/<AccountController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("{id}", Name = "GetAccount")]
+        [ProducesResponseType(typeof(AccountsVm), (int)HttpStatusCode.OK)]
+        public async Task<ActionResult<AccountsVm>> GetAccountById(Guid Id)
         {
-            return "value";
+            var query = new GetAccountQuery(Id);
+            var account = await _mediator.Send(query);
+            return Ok(account);
         }
-
-
 
         // POST api/<AccountController>
         [HttpPost(Name = "CreateAccount")]
