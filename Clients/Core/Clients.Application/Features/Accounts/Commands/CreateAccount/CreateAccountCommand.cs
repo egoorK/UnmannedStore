@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 namespace Clients.Application.Features.Accounts.Commands.CreateAccount
 {
+    // Модель представления
     public class CreateAccountCommand : IRequest<Guid>  // Запрос с ответом GUID
     {
         public string Username { get; set; }

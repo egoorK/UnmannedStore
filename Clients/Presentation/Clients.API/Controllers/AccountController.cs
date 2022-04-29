@@ -3,8 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Net;
+using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 using Clients.Application.Features.Accounts.Commands.CreateAccount;
+using Clients.Application.Features.Accounts.Commands.UpdateAccount;
+using Clients.Application.Features.Accounts.Commands.DeleteAccount;
 
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -52,19 +55,27 @@ namespace Clients.API.Controllers
 
         // ActionResult - абстрактный класс, возвращающий разные типы данных
 
-
-
-
         // PUT api/<AccountController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut(Name = "UpdateAccount")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType] // Создает описательные сведения об ответе для страниц справки по веб-API, создаваемых Swagger.
+        public async Task<ActionResult> UpdateAccount([FromBody] UpdateAccountCommand command)
         {
+            await _mediator.Send(command);
+            return NoContent();
         }
 
         // DELETE api/<AccountController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("{id}", Name = "DeleteAccount")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
+        public async Task<ActionResult> DeleteAccount(Guid id)
         {
+            var command = new DeleteAccountCommand() { Account_ID = id };
+            await _mediator.Send(command);
+            return NoContent();
         }
     }
 }

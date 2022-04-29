@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Clients.Domain.Entities
 {
-    class UserDevice
+    public class UserDevice
     {
         public Guid Device_ID { get; set; }
         public string Brand { get; set; }

@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using MediatR;
 
 namespace Clients.Application.Features.Accounts.Commands.UpdateAccount
 {
-    class UpdateAccountCommand
+    public class UpdateAccountCommand : IRequest
     {
         public Guid Account_ID { get; set; }
         public string Username { get; set; }

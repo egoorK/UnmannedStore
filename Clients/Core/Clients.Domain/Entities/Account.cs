@@ -3,7 +3,8 @@ using System.Collections.Generic;
 
 namespace Clients.Domain.Entities
 {
-    class Account
+    // Модель предметной области
+    public class Account
     {
         public Guid Account_ID { get; set; }
         public string Username { get; set; }
