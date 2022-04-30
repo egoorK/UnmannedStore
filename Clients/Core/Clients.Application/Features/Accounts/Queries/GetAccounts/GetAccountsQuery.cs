@@ -1,10 +1,9 @@
-﻿using System;
+﻿using MediatR;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Clients.Application.Features.Accounts.Queries.GetAccounts
 {
-    public class GetAccountsQuery
+    public class GetAccountsQuery : IRequest<List<AccountsVm>>
     {
     }
 }

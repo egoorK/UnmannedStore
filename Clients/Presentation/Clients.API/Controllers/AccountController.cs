@@ -28,10 +28,12 @@ namespace Clients.API.Controllers
 
 
         // GET: api/<AccountController>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        [HttpGet(Name = "GetAccounts")]
+        [ProducesResponseType(typeof(IEnumerable<AccountsVm>), (int)HttpStatusCode.OK)]
+        public async Task<ActionResult<IEnumerable<AccountsVm>>> GetAccountsAll()
         {
-            return new string[] { "value1", "value2" };
+            var accounts = await _mediator.Send(new GetAccountsQuery());
+            return Ok(accounts);
         }
 
         // GET api/<AccountController>/5
