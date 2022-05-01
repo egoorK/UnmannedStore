@@ -13,8 +13,8 @@ using Clients.Application.Features.Accounts.Queries.GetAccounts;
 
 namespace Clients.API.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/v1/[controller]")]
     public class AccountController : ControllerBase
     {
         private readonly IMediator _mediator;

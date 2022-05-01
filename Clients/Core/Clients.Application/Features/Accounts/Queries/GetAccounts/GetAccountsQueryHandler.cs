@@ -18,7 +18,7 @@ namespace Clients.Application.Features.Accounts.Queries.GetAccounts
 
         public async Task<List<AccountsVm>> Handle(GetAccountsQuery request, CancellationToken cancellationToken)
         {
-            var accounts = await _accountRepository.GetAccountsAll();
+            var accounts = await _accountRepository.GetAccountsAllAsync();
             return _mapper.Map<List<AccountsVm>>(accounts);
         }
     }

@@ -4,10 +4,11 @@ using AutoMapper;
 using System.Threading;
 using System.Threading.Tasks;
 using Clients.Domain.Entities;
+using Clients.Application.Contracts.Persistence;
 
 namespace Clients.Application.Features.Accounts.Commands.CreateAccount
 {
-    public class CreateAccountCommandHandler : IRequestHandler<CreateAccountCommand, Guid>
+    public class CreateAccountCommandHandler : IRequestHandler<CreateAccountCommand, Guid>  // Типы входных и выходных данных
     {
         private readonly IMapper _mapper;
 

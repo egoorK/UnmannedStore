@@ -19,7 +19,7 @@ namespace Clients.Application.Features.Accounts.Queries.GetAccountById
 
         public async Task<AccountsVm> Handle(GetAccountQuery request, CancellationToken cancellationToken)
         {
-            var account = await _accountRepository.GetAccountById(request.Account_ID);
+            var account = await _accountRepository.GetAccountByIdAsync(request.Account_ID);
             return _mapper.Map<AccountsVm>(account);
         }
     }
