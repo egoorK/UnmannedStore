@@ -4,12 +4,14 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using Clients.Application.Contracts.Persistence;
 
 namespace Clients.Application.Features.Accounts.Queries.GetAccounts
 {
     public class GetAccountsQueryHandler : IRequestHandler<GetAccountsQuery, List<AccountsVm>>
     {
         private readonly IMapper _mapper;
+        private readonly IAccountRepository _accountRepository;
 
         public GetAccountsQueryHandler(IMapper mapper)
         {

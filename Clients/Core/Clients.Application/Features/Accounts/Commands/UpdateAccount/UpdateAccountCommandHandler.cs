@@ -4,12 +4,14 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Clients.Domain.Entities;
+using Clients.Application.Contracts.Persistence;
 
 namespace Clients.Application.Features.Accounts.Commands.UpdateAccount
 {
     public class UpdateAccountCommandHandler : IRequestHandler<UpdateAccountCommand>
     {
         private readonly IMapper _mapper;
+        private readonly IAccountRepository _accountRepository;
 
         public UpdateAccountCommandHandler(IMapper mapper)
         {
@@ -18,7 +20,7 @@ namespace Clients.Application.Features.Accounts.Commands.UpdateAccount
 
         public async Task<Unit> Handle(UpdateAccountCommand request, CancellationToken cancellationToken)
         {
-            var accountToUpdate = await _accountRepository.GetByIdAsync(request.Account_ID);
+            var accountToUpdate = await _accountRepository.GetAccountByIdAsync(request.Account_ID);
 
             /* Добавить обработку исключений
             if(accountToUpdate == null)

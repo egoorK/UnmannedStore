@@ -11,6 +11,7 @@ namespace Clients.Application.Features.Accounts.Commands.CreateAccount
     public class CreateAccountCommandHandler : IRequestHandler<CreateAccountCommand, Guid>  // Типы входных и выходных данных
     {
         private readonly IMapper _mapper;
+        private readonly IAccountRepository _accountRepository;
 
         public CreateAccountCommandHandler(IMapper mapper)
         {
@@ -22,7 +23,7 @@ namespace Clients.Application.Features.Accounts.Commands.CreateAccount
             var accountEntity = _mapper.Map<Account>(request);
             var newAccount = await _accountRepository.AddAsync(accountEntity);
 
-            return newAccount.Account_ID;
+            return newAccount; // newAccount.Account_ID
         }
 
         // CancellationToken cancellationToken - для безаварийной отмены задачи в случае сбоя

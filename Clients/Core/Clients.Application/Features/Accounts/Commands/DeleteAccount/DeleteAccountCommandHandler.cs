@@ -4,12 +4,14 @@ using AutoMapper;
 using System.Threading;
 using System.Threading.Tasks;
 using Clients.Domain.Entities;
+using Clients.Application.Contracts.Persistence;
 
 namespace Clients.Application.Features.Accounts.Commands.DeleteAccount
 {
     public class DeleteAccountCommandHandler : IRequestHandler<DeleteAccountCommand>
     {
         private readonly IMapper _mapper;
+        private readonly IAccountRepository _accountRepository;
 
         public DeleteAccountCommandHandler(IMapper mapper)
         {
@@ -18,7 +20,7 @@ namespace Clients.Application.Features.Accounts.Commands.DeleteAccount
 
         public async Task<Unit> Handle(DeleteAccountCommand request, CancellationToken cancellationToken)
         {
-            var accountToDelete = await _accountRepository.GetByIdAsync(request.Account_ID);
+            var accountToDelete = await _accountRepository.GetAccountByIdAsync(request.Account_ID);
 
             /* Добавить обработку исключений
             if(accountToUpdate == null)

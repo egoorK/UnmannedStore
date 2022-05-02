@@ -1,14 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using Clients.Domain.Entities;
 
 namespace Clients.Application.Contracts.Persistence
 {
-    public interface IAccountRepository<T>
+    public interface IAccountRepository // Изменить возвращаемые значения
     {
-        Task<T> AddAsync(T entity);
-        Task UpdateAsync(T entity);
-        Task DeleteAsync(T entity);
-        Task<T> GetAccountByIdAsync(T entity);
-        Task<IReadOnlyList<T>> GetAccountsAllAsync();
+        Task<Guid> AddAsync(Account entity);
+        Task UpdateAsync(Account entity);
+        Task DeleteAsync(Account entity);
+        Task<Account> GetAccountByIdAsync(Guid entityId);
+        Task<IReadOnlyList<Account>> GetAccountsAllAsync();
     }
 }
