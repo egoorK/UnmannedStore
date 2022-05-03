@@ -4,6 +4,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Clients.Application.Features.Accounts.Queries.GetAccounts;
+using Clients.Application.Contracts.Persistence;
 
 
 namespace Clients.Application.Features.Accounts.Queries.GetAccountById
@@ -11,6 +12,7 @@ namespace Clients.Application.Features.Accounts.Queries.GetAccountById
     public class GetAccountQueryHandler : IRequestHandler<GetAccountQuery, AccountsVm>
     {
         private readonly IMapper _mapper;
+        private readonly IAccountRepository _accountRepository;
 
         public GetAccountQueryHandler(IMapper mapper)
         {
