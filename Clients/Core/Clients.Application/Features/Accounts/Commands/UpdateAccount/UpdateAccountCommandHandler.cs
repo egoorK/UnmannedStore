@@ -13,9 +13,10 @@ namespace Clients.Application.Features.Accounts.Commands.UpdateAccount
         private readonly IMapper _mapper;
         private readonly IAccountRepository _accountRepository;
 
-        public UpdateAccountCommandHandler(IMapper mapper)
+        public UpdateAccountCommandHandler(IMapper mapper, IAccountRepository accountRepository)
         {
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _accountRepository = accountRepository ?? throw new ArgumentNullException(nameof(accountRepository));
         }
 
         public async Task<Unit> Handle(UpdateAccountCommand request, CancellationToken cancellationToken)

@@ -13,9 +13,10 @@ namespace Clients.Application.Features.Accounts.Commands.CreateAccount
         private readonly IMapper _mapper;
         private readonly IAccountRepository _accountRepository;
 
-        public CreateAccountCommandHandler(IMapper mapper)
+        public CreateAccountCommandHandler(IMapper mapper, IAccountRepository accountRepository)
         {
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _accountRepository = accountRepository ?? throw new ArgumentNullException(nameof(accountRepository));
         }
 
         public async Task<Guid> Handle(CreateAccountCommand request, CancellationToken cancellationToken) // Реализует обработку запроса от Контроллера, переданного через Медиатор 

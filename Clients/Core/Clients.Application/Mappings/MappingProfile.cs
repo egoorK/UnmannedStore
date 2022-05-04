@@ -2,6 +2,7 @@
 using Clients.Domain.Entities;
 using Clients.Application.Features.Accounts.Commands.CreateAccount;
 using Clients.Application.Features.Accounts.Commands.UpdateAccount;
+using Clients.Application.Features.Accounts.Commands.DeleteAccount;
 using Clients.Application.Features.Accounts.Queries.GetAccounts;
 
 namespace Clients.Application.Mappings
@@ -23,6 +24,10 @@ namespace Clients.Application.Mappings
                 .ForMember(dest => dest.Email, act => act.MapFrom(src => src.Email))
                 .ForMember(dest => dest.Date_of_Birth, act => act.MapFrom(src => src.Date_of_Birth))
                 .ForMember(dest => dest.Phone_number, act => act.MapFrom(src => src.Phone_number))
+                .ReverseMap();
+
+            CreateMap<Account, DeleteAccountCommand>()
+                .ForMember(dest => dest.Account_ID, act => act.MapFrom(src => src.Account_ID))
                 .ReverseMap();
 
             CreateMap<Account, AccountsVm>()

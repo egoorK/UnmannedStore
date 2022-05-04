@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using System;
+﻿using System;
 using Clients.Application.Contracts.Persistence;
 using Clients.Persistence.ContextsDB;
 using Clients.Domain.Entities; 
@@ -12,7 +11,6 @@ namespace Clients.Persistence.Repositories
     public class AccountRepository : IAccountRepository
     {
         protected readonly AccountContext _dbContext;
-        private readonly IMapper _mapper;
 
         public AccountRepository(AccountContext dbContext) 
         {
@@ -31,13 +29,17 @@ namespace Clients.Persistence.Repositories
             var accountToUpdate = await _dbContext.Accounts.FindAsync(entity.Account_ID); // Проверка на наличие | new object[] { entity.Account_ID }
 
             // Добавить обработку исключений
-            if(accountToUpdate == null)
+            if (accountToUpdate == null)
             {
-              //  throw new NotFoundException(nameof(Account), request.Account_ID);
+                //  throw new NotFoundException(nameof(Account), request.Account_ID);
             }
             else
             {
-                _mapper.Map(entity, accountToUpdate, typeof(Account), typeof(Account));
+                accountToUpdate.Account_ID = entity.Account_ID;
+                accountToUpdate.Username = entity.Username;
+                accountToUpdate.Email = entity.Email;
+                accountToUpdate.Date_of_Birth = entity.Date_of_Birth;
+                accountToUpdate.Phone_number = entity.Phone_number;
                 await _dbContext.SaveChangesAsync();
             }
         }

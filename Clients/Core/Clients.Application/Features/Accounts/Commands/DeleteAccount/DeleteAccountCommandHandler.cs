@@ -13,14 +13,16 @@ namespace Clients.Application.Features.Accounts.Commands.DeleteAccount
         private readonly IMapper _mapper;
         private readonly IAccountRepository _accountRepository;
 
-        public DeleteAccountCommandHandler(IMapper mapper)
+        public DeleteAccountCommandHandler(IMapper mapper, IAccountRepository accountRepository)
         {
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _accountRepository = accountRepository ?? throw new ArgumentNullException(nameof(accountRepository));
         }
 
         public async Task<Unit> Handle(DeleteAccountCommand request, CancellationToken cancellationToken)
         {
-            var accountToDelete = await _accountRepository.GetAccountByIdAsync(request.Account_ID);
+            var req = _mapper.Map<Account>(request);
+            var accountToDelete = await _accountRepository.GetAccountByIdAsync(req.Account_ID);
 
             /* Добавить обработку исключений
             if(accountToUpdate == null)

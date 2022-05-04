@@ -1,17 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Clients.Domain.Entities;
+//using Clients.Persistence.Configuration;
 
 namespace Clients.Persistence.ContextsDB
 {
     public class AccountContext : DbContext
     {
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=Clients;Username=postgres;Password=sudo");
-        }
-
+      
         public AccountContext(DbContextOptions<AccountContext> options) : base(options) { }
 
         public DbSet<Account> Accounts { get; set; }

@@ -14,9 +14,10 @@ namespace Clients.Application.Features.Accounts.Queries.GetAccountById
         private readonly IMapper _mapper;
         private readonly IAccountRepository _accountRepository;
 
-        public GetAccountQueryHandler(IMapper mapper)
+        public GetAccountQueryHandler(IMapper mapper, IAccountRepository accountRepository)
         {
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _accountRepository = accountRepository ?? throw new ArgumentNullException(nameof(accountRepository));
         }
 
         public async Task<AccountsVm> Handle(GetAccountQuery request, CancellationToken cancellationToken)
