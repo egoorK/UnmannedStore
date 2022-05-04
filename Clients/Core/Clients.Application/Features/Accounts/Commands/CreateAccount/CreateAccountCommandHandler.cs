@@ -21,9 +21,9 @@ namespace Clients.Application.Features.Accounts.Commands.CreateAccount
         public async Task<Guid> Handle(CreateAccountCommand request, CancellationToken cancellationToken) // Реализует обработку запроса от Контроллера, переданного через Медиатор 
         {
             var accountEntity = _mapper.Map<Account>(request);
-            var newAccount = await _accountRepository.AddAsync(accountEntity);
+            var newAccountId = await _accountRepository.AddAsync(accountEntity);
 
-            return newAccount; // newAccount.Account_ID
+            return newAccountId; // newAccount.Account_ID
         }
 
         // CancellationToken cancellationToken - для безаварийной отмены задачи в случае сбоя
