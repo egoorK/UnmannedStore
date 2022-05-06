@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.32407.337
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Src", "Src", "{B065E352-E60A-461A-B9CC-222D0DF78BA7}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Clients", "Clients", "{B065E352-E60A-461A-B9CC-222D0DF78BA7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{496EC0E3-0F41-4FCB-A0E6-B4A28B7BF417}"
 EndProject
@@ -17,9 +17,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Clients.API", "Clients\Pres
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Clients.Application", "Clients\Core\Clients.Application\Clients.Application.csproj", "{86500589-EA21-465F-8406-1EA1C6D3D74A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clients.Infrastructure", "Clients\Infrastructure\Clients.Infrastructure\Clients.Infrastructure.csproj", "{E6818151-0E5F-4DD5-B87A-210B545BB3E0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Clients.Infrastructure", "Clients\Infrastructure\Clients.Infrastructure\Clients.Infrastructure.csproj", "{E6818151-0E5F-4DD5-B87A-210B545BB3E0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clients.Persistence", "Clients\Infrastructure\Clients.Persistence\Clients.Persistence.csproj", "{0DB13A2C-AE6D-4D68-9686-C8BE21C382A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Clients.Persistence", "Clients\Infrastructure\Clients.Persistence\Clients.Persistence.csproj", "{0DB13A2C-AE6D-4D68-9686-C8BE21C382A8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{388FBD8E-BE0B-4A9F-9854-EBEB4ADEE422}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApiGateways", "ApiGateways", "{7939CE31-350A-40E1-B430-76E1833068A9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -52,6 +56,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{B065E352-E60A-461A-B9CC-222D0DF78BA7} = {388FBD8E-BE0B-4A9F-9854-EBEB4ADEE422}
 		{496EC0E3-0F41-4FCB-A0E6-B4A28B7BF417} = {B065E352-E60A-461A-B9CC-222D0DF78BA7}
 		{1F1D84C2-DDC0-45F0-8335-EBD5A4F6EFFF} = {B065E352-E60A-461A-B9CC-222D0DF78BA7}
 		{DC62EA76-9816-497F-A4A4-D4CCEBA549F5} = {B065E352-E60A-461A-B9CC-222D0DF78BA7}
