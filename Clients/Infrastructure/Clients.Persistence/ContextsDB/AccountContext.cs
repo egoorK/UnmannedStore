@@ -19,6 +19,12 @@ namespace Clients.Persistence.ContextsDB
             Database.EnsureCreated();   // создаем бд с новой схемой
         }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseNpgsql("Host=192.168.0.109;Port=7001;Database=ClientsDB;Username=pstgrsqluser;Password=pstgrs3381");
+        }
+
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(AccountContext).Assembly);
