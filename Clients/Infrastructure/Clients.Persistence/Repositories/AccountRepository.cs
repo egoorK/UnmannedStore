@@ -24,7 +24,7 @@ namespace Clients.Persistence.Repositories
             return entity.Account_ID;
         }
 
-        public async Task UpdateAsync(Account entity) // ???
+        public async Task UpdateAsync(Account entity)
         {
             var accountToUpdate = await _dbContext.Accounts.FindAsync(entity.Account_ID); // Проверка на наличие | new object[] { entity.Account_ID }
 

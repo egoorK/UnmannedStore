@@ -13,6 +13,39 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
+  zookeeper:
+    container_name: zookeeper
+    hostname: zookeeper
+    restart: always
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - "2181:2181"
+    volumes:
+      - .data/zookeeper/data:/data
+      - .data/zookeeper/datalog:/datalog
+
+  kafka:
+    container_name: kafka
+    hostname: kafka
+    restart: always
+    ports:
+      - "19092:19092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: LISTENER_DOCKER_INTERNAL:PLAINTEXT,LISTENER_DOCKER_EXTERNAL:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: LISTENER_DOCKER_INTERNAL://kafka:9092,LISTENER_DOCKER_EXTERNAL://localhost:19092
+      KAFKA_INTER_BROKER_LISTENER_NAME: LISTENER_DOCKER_INTERNAL
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+    volumes:
+      - ./data/kafka/data:/var/lib/kafka/data
+    depends_on:
+      - zookeeper
+
   clients.api:
     container_name: clients.api
     environment:
@@ -24,6 +57,7 @@ services:
       - "DatabaseSettings:ConnectionString=Server=192.168.0.109;Port=7001;Database=ClientsDB;User Id=pstgrsqluser;Password=pstgrs3381;"
     depends_on:
       - clientsdb
+      - kafka
     ports:
       - "8001:443"
       - "8011:80"

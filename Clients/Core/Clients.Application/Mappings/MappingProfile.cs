@@ -1,5 +1,7 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 using Clients.Domain.Entities;
+using Clients.Application.DTOForEvents;
 using Clients.Application.Features.Accounts.Commands.CreateAccount;
 using Clients.Application.Features.Accounts.Commands.UpdateAccount;
 using Clients.Application.Features.Accounts.Commands.DeleteAccount;
@@ -37,6 +39,14 @@ namespace Clients.Application.Mappings
                 .ForMember(dest => dest.Date_of_Birth, act => act.MapFrom(src => src.Date_of_Birth))
                 .ForMember(dest => dest.Phone_number, act => act.MapFrom(src => src.Phone_number))
                 .ReverseMap();
+
+            CreateMap<CreateAccountCommand, AccountCreatedEvent>()
+                .ForMember(dest => dest.Username, act => act.MapFrom(src => src.Username))
+                .ForMember(dest => dest.Email, act => act.MapFrom(src => src.Email))
+                .ForMember(dest => dest.Date_of_Birth, act => act.MapFrom(src => src.Date_of_Birth))
+                .ForMember(dest => dest.Phone_number, act => act.MapFrom(src => src.Phone_number))
+                .ReverseMap();
+
         }
     }
 }

@@ -27,6 +27,8 @@ namespace Clients.Application.Features.Accounts.Commands.UpdateAccount
             var accountToUpdate = _mapper.Map<Account>(request);
             await _accountRepository.UpdateAsync(accountToUpdate);
 
+            // Добавить конфигурацию в MappingProfile для отправления события
+
             return Unit.Value;
         }
 

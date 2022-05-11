@@ -11,7 +11,7 @@ COPY ["Clients/Presentation/Clients.API/Clients.API.csproj", "Clients/Presentati
 COPY ["Clients/Core/Clients.Application/Clients.Application.csproj", "Clients/Core/Clients.Application/"]
 COPY ["Clients/Core/Clients.Domain/Clients.Domain.csproj", "Clients/Core/Clients.Domain/"]
 COPY ["Clients/Infrastructure/Clients.Persistence/Clients.Persistence.csproj", "Clients/Infrastructure/Clients.Persistence/"]
-#COPY ["Clients/Infrastructure/Clients.Infrastructure/Clients.Infrastructure.csproj", "Clients/Infrastructure/Clients.Infrastructure/"]
+COPY ["Clients/Infrastructure/Clients.Infrastructure/Clients.Infrastructure.csproj", "Clients/Infrastructure/Clients.Infrastructure/"]
 RUN dotnet restore "Clients/Presentation/Clients.API/Clients.API.csproj"
 COPY . .
 WORKDIR "/src/Clients/Presentation/Clients.API"

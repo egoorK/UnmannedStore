@@ -4,6 +4,12 @@ services:
   clientsdb:
     image: postgres:latest
 
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+
+  kafka:
+    image: confluentinc/cp-kafka:latest
+
   clients.api:
     image: ${DOCKER_REGISTRY-}clientsapi
     build:
@@ -12,3 +18,5 @@ services:
 
 volumes:
   postgres_data:
+  zookeeper_data:
+  kafka_data:
