@@ -2,7 +2,6 @@
 using Confluent.Kafka;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Clients.Application.DTOForEvents;
 using Microsoft.Extensions.Configuration;
 using Clients.Application.Contracts.Infrastructure;
 
@@ -19,19 +18,17 @@ namespace Clients.Infrastructure.Publishers
             _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
         }
 
-        public async Task AccountAddedEventAsync(AccountCreatedEvent entity)
+        public async Task SendMessageAsync<T>(T entity)
         {
             var topicName = _configuration.GetValue<string>("TopicName"); // Работает вместе с NuGet "Microsoft.Extensions.Configuration.Binder"
             var message = new Message<int, string>
             {
-                Key = 14,
+                Key = 14, // Произвольное значение
                 Value = JsonSerializer.Serialize(entity)
             };
 
             await _producer.ProduceAsync(topicName, message);
         }
 
-        //Task AccountUpdatedEventAsync(AccountUpdatedEvent entity);
-        //Task AccountDeletedEventAsync(AccountDeletedEvent entityId);
     }
 }

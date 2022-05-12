@@ -43,8 +43,8 @@ namespace Clients.API
                 };
                 return new ProducerBuilder<int, string>(producerConfig).Build();
             });
-            services.AddScoped(typeof(IAccountPublisher), typeof(AccountPublisher));
-            //services.AddScoped<IAccountPublisher, AccountPublisher>();
+
+            services.AddScoped<IAccountPublisher, AccountPublisher>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

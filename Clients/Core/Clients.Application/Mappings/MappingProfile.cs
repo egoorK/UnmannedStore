@@ -47,6 +47,17 @@ namespace Clients.Application.Mappings
                 .ForMember(dest => dest.Phone_number, act => act.MapFrom(src => src.Phone_number))
                 .ReverseMap();
 
+            CreateMap<UpdateAccountCommand, AccountUpdatedEvent>()
+                .ForMember(dest => dest.Account_ID, act => act.MapFrom(src => src.Account_ID))
+                .ForMember(dest => dest.Username, act => act.MapFrom(src => src.Username))
+                .ForMember(dest => dest.Email, act => act.MapFrom(src => src.Email))
+                .ForMember(dest => dest.Date_of_Birth, act => act.MapFrom(src => src.Date_of_Birth))
+                .ForMember(dest => dest.Phone_number, act => act.MapFrom(src => src.Phone_number))
+                .ReverseMap();
+
+            CreateMap<DeleteAccountCommand, AccountDeletedEvent>()
+                .ForMember(dest => dest.Account_ID, act => act.MapFrom(src => src.Account_ID))
+                .ReverseMap();
         }
     }
 }

@@ -30,7 +30,7 @@ namespace Clients.Application.Features.Accounts.Commands.CreateAccount
 
             var accountEventEntity = _mapper.Map<AccountCreatedEvent>(request);
             accountEventEntity.Account_ID = newAccountId;
-            await _accountPublisher.AccountAddedEventAsync(accountEventEntity);
+            await _accountPublisher.SendMessageAsync(accountEventEntity);
 
             return newAccountId; // newAccount.Account_ID
         }
