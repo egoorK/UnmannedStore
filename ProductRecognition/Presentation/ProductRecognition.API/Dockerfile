@@ -8,6 +8,10 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
 WORKDIR /src
 COPY ["ProductRecognition/Presentation/ProductRecognition.API/ProductRecognition.API.csproj", "ProductRecognition/Presentation/ProductRecognition.API/"]
+COPY ["ProductRecognition/Infrastructure/ProductRecognition.Persistence/ProductRecognition.Persistence.csproj", "ProductRecognition/Infrastructure/ProductRecognition.Persistence/"]
+COPY ["ProductRecognition/Core/ProductRecognition.Application/ProductRecognition.Application.csproj", "ProductRecognition/Core/ProductRecognition.Application/"]
+COPY ["ProductRecognition/Core/ProductRecognition.Domain/ProductRecognition.Domain.csproj", "ProductRecognition/Core/ProductRecognition.Domain/"]
+COPY ["ProductRecognition/Infrastructure/ProductRecognition.Infrastructure/ProductRecognition.Infrastructure.csproj", "ProductRecognition/Infrastructure/ProductRecognition.Infrastructure/"]
 RUN dotnet restore "ProductRecognition/Presentation/ProductRecognition.API/ProductRecognition.API.csproj"
 COPY . .
 WORKDIR "/src/ProductRecognition/Presentation/ProductRecognition.API"

@@ -13,6 +13,14 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
+  productrecognitiondb:
+    container_name: productrecognitiondb
+    restart: always
+    ports:
+      - "7002:27017"
+    volumes:
+      - mongo_data:/data/db
+
   zookeeper:
     container_name: zookeeper
     hostname: zookeeper
@@ -61,6 +69,26 @@ services:
     ports:
       - "8001:443"
       - "8011:80"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+      - ~/.aspnet/https:/https:ro
+
+  productrecognition.api:
+    container_name: productrecognition.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_HTTPS_PORT=8002
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=zUBHaFFxeT
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+      - "DatabaseSettings:ConnectionString=mongodb://productrecognitiondb:27017"
+    depends_on:
+      - productrecognitiondb
+      - kafka
+    ports:
+      - "8002:443"
+      - "8022:80"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro

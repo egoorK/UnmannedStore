@@ -4,7 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using ProductRecognition.Application.Features.Images.Commands.SaveImage;
+using ProductRecognition.Application.Features.Images.Commands.UpdateImage;
+using ProductRecognition.Application.Features.Images.Commands.DeleteImage;
 using ProductRecognition.Application.Features.Images.Queries.GetImageById;
+using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 
 namespace ProductRecognition.API.Controllers
@@ -40,22 +43,33 @@ namespace ProductRecognition.API.Controllers
         // POST api/<ImageController>
         [HttpPost(Name = "RecognizeProduct")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
-        public async Task<ActionResult<Guid>> RecognizeProduct([FromBody] SaveImageCommand command)
+        public async Task<ActionResult> RecognizeProduct([FromBody] SaveImageCommand command)
         {
             await _mediator.Send(command);
             return NoContent();
         }
 
-        // PUT api/<ImageController>/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody] string value)
-        //{
-        //}
+        //PUT api/<ImageController>/5
+        [HttpPut(Name = "UpdateImage")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
+        public async Task<ActionResult> UpdateImage([FromBody] UpdateImageCommand command)
+        {
+            await _mediator.Send(command);
+            return NoContent();
+        }
 
-        // DELETE api/<ImageController>/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
+        //DELETE api/<ImageController>/5
+        [HttpDelete("{id}", Name = "DeleteImage")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
+        public async Task<ActionResult> DeleteImage(Guid Id)
+        {
+            var command = new DeleteImageCommand() { Image_ID = Id };
+            await _mediator.Send(command);
+            return NoContent();
+        }
     }
 }

@@ -20,6 +20,7 @@ namespace ProductRecognition.API
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
+                    webBuilder.UseUrls("https://*:443");
                     webBuilder.UseStartup<Startup>();
                 });
     }

@@ -7,6 +7,8 @@ namespace ProductRecognition.Application.Contracts.Persistence
     public interface IImageRepository
     {
         Task<Guid> SaveAsync(Image entity);
+        Task UpdateAsync(Image entity);
+        Task DeleteAsync(Guid entityId);
         Task<Image> GetImageByIdAsync(Guid entityId);
     }
 }

@@ -5,8 +5,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using ProductRecognition.Domain.Entities;
 using ProductRecognition.Application.Contracts.Persistence;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ProductRecognition.Application.Features.Images.Commands.SaveImage
 {
