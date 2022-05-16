@@ -5,13 +5,13 @@ using ProductRecognition.Domain.Entities;
 
 namespace ProductRecognition.Persistence.Configuration
 {
-    public class ProductConfiguration : ConfigurationDB<Product>
+    public class ProductConfiguration
     {
-        public override void Map(BsonClassMap<Product> cm)
-        {
-            cm.AutoMap();
-            cm.MapMember(p => p.Product_ID).SetElementName("Product_ID").SetSerializer(new GuidSerializer(BsonType.String));
-            cm.MapMember(p => p.Name).SetElementName("Name");
-        }
+        //public override void Map(BsonClassMap<Product> cm)
+        //{
+        //    cm.AutoMap();
+        //    cm.MapMember(p => p.Product_ID).SetElementName("Product_ID").SetSerializer(new GuidSerializer(BsonType.String));
+        //    cm.MapMember(p => p.Name).SetElementName("Name");
+        //}
     }
 }
