@@ -24,7 +24,7 @@ namespace ProductRecognition.Application.Features.Images.Commands.SaveImage
         public async Task<Unit> Handle(SaveImageCommand request, CancellationToken cancellationToken)
         {
             var imageToSave = _mapper.Map<Image>(request);
-            imageToSave.Term_of_Receipt = DateTime.Now;
+            //imageToSave.Term_of_Receipt = DateTime.Now;
             var newImageId = await _imageRepository.SaveAsync(imageToSave);
 
             // Produce

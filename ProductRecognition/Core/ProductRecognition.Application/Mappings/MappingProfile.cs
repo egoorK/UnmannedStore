@@ -1,5 +1,4 @@
-﻿using System;
-using AutoMapper;
+﻿using AutoMapper;
 using ProductRecognition.Domain.Entities;
 using ProductRecognition.Application.Features.Images.Commands.SaveImage;
 using ProductRecognition.Application.Features.Images.Commands.UpdateImage;
@@ -13,8 +12,8 @@ namespace ProductRecognition.Application.Mappings
         public MappingProfile()
         {
             CreateMap<Image, SaveImageCommand>()
-                .ForMember(dest => dest.Image_Base64, act => act.MapFrom(src => src.Image_Base64))
                 .ForMember(dest => dest.Account_ID, act => act.MapFrom(src => src.AccountID))
+                .ForMember(dest => dest.Image_Base64, act => act.MapFrom(src => src.Image_Base64))
                 .ReverseMap();
 
             CreateMap<Image, UpdateImageCommand>()

@@ -2,13 +2,14 @@
 using MongoDB.Driver;
 using System.Collections.Generic;
 using ProductRecognition.Domain.Entities;
+using ProductRecognition.Persistence.Configuration;
 
 
 namespace ProductRecognition.Persistence.ContextsDB
 {
     public class ImageContextSeed
     {
-        public static void SeedData(IMongoCollection<Image> imageCollection)
+        public static void SeedData(IMongoCollection<ImageConfiguration> imageCollection)
         {
             bool existImage = imageCollection.Find(p => true).Any();
 
@@ -18,13 +19,12 @@ namespace ProductRecognition.Persistence.ContextsDB
             }
         }
 
-        private static IEnumerable<Image> GetPreconfiguredImages()
+        private static IEnumerable<ImageConfiguration> GetPreconfiguredImages()
         {
-            return new List<Image>()
+            return new List<ImageConfiguration>()
             {
-                new Image()
+                new ImageConfiguration()
                 {
-                    Image_ID = new Guid("FF0186C5-C3A5-4668-9641-83FDFC111571"),
                     Image_Base64 = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD//gA7Q1JFQVRPUjogZ2QtanBlZyB2MS4wICh1c2luZyBJSkcgSlBFRyB2NjIpLCBxdWFsaXR5ID0gODUK/9sAQwAFAwQEBAMFBAQEBQUFBgcMCAcHBwcPCwsJDBEPEhIRDxERExYcFxMUGhURERghGBodHR8" +
                     "fHxMXIiQiHiQcHh8e/9sAQwEFBQUHBgcOCAgOHhQRFB4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4e/8AAEQgAyADIAwEiAAIRAQMRAf/EAB8AAAEFAQEBAQEBAAAAAAAAAAABAgMEBQYHCAkKC//EALUQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFB" +
                     "BhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+v/EAB8BAAMBAQEBAQEBA" +
@@ -89,29 +89,12 @@ namespace ProductRecognition.Persistence.ContextsDB
                     "xc0qmmZoBoEmS5oBpgJpvNFi7kwYU4NUBZtoGeBSqTmlYamT7qUNz0qIGhZCjZKBx6GlYrmsWAwwxBHYYpAx71WT75J4p7MB1DH6UuXUalpcslsjmk3cVDGzeWFJO0dKcDS5SlK6uSbqYWpM0xjQkDY7dg5HFLvJPJqImlzVWM2yffkUpeq2+gsataENlyOTkYNOkkJI571VVvenb/AJqu5DNGOU461Ks" +
                     "3HWs5JMDrU1sJJ50hiXdI7BVGcZJqlKwrF9ZfmHPSioby3u7C6Nte28tvMoBKSKVOD0P0PrRVKYuU58miiisRhRRRQMUUUUUiugUuaKKQhQaXNFFBQoNLmiikUmGaUGiigaYuaQkUUUguNNNJ4oopoliZozRRVEMcDShqKKYh4f3ra0bUdJWJbbUNLtyRkfaVaXccn+IBwMc9h0H40UUnqOLsy3caTpVk" +
                     "4a78S2c/Q7LFXlbHsSAvvgkUUUURu1uW2k9j/9k=",
-                    Term_of_Receipt = new DateTime(2015, 7, 20, 18, 30, 25), // год - месяц - день - час - минута - секунда
-                    Frames_Coordinates = new List<Frame>()
-                    {
-                        new Frame()
-                        {
-                            Top_Left_Corner_Coord = new int[] { 123, 456 },
-                            Frame_Height = 144,
-                            Frame_Width = 288
-                        },
-
-                        new Frame()
-                        {
-                            Top_Left_Corner_Coord = new int[] { 789, 154 },
-                            Frame_Height = 196,
-                            Frame_Width = 64
-                        }
-                    },
+                    Term_of_Receipt = DateTime.Now,
                     AccountID = new Guid("817D8895-4A86-4D83-9CAB-44C6ADDA1E99")
                 },
 
-                new Image()
+                new ImageConfiguration()
                 {
-                    Image_ID = new Guid("8D6C5A2E-0872-45E4-86B1-700ACB54BF5A"),
                     Image_Base64 = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD//gA7Q1JFQVRPUjogZ2QtanBlZyB2MS4wICh1c2luZyBJSkcgSlBFRyB2ODApLCBxdWFsaXR5ID0gOTAK/9sAQwADAgIDAgIDAwMDBAMDBAUIBQUEBAUKBwcGCAwKDAwLCgsLDQ4SEA0OEQ4LCxAWEBETFBUVFQwP" +
                     "FxgWFBgSFBUU/9sAQwEDBAQFBAUJBQUJFA0LDRQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQU/8AAEQgAXQCCAwERAAIRAQMRAf/EABwAAAIDAQEBAQAAAAAAAAAAAAUGAwQHCAIACf/EAEUQAAEDAgUCAwMIBQkJAAAAAAIBAwQFEgAGERMiBzIUIUIII1IVM" +
                     "TNBUWFikkNTcoKiFiRjcYGRssLwCVSTobHR0uHi/8QAGgEAAgMBAQAAAAAAAAAAAAAAAwQBAgUABv/EADkRAAICAgECBAQCBgoDAAAAAAECAAMREiEEMRMiMkFCUYLwFFIFI2FikbFxcoGSoaKywdHSwuHi/9oADAMBAAIRAxEAPwDiegOx6nOcanPy4rgSxTUEElBWyESvArbfzceONcbNPNMQI+0+f" +
@@ -156,22 +139,12 @@ namespace ProductRecognition.Persistence.ContextsDB
                     "EVPPTRPn88Inp17YmgOqPcGMtO6sVNkFE5Ski+Xmqa/PhVumHtGl6pveFqr1JjZupq0zMDTFSppIiLHkAKinEhHz/AAkVw/CXbgJoZeUPMN46uNbBxMYq3s25aqVNiMZcqL1HnlIK599wpLSt7o+nQS4tkYiPG4i5fhaHUOnqiX4Otx5eTOe855Xn5FzQ5TJ0V8EbMkalqCCL7dxCDqIhFoJbR28vS" +
                     "WHVsDczKuoNYYGDLo/6tv8A4eDZin6ydhMuKqqmETzNyWBJfLzwKW2MmQ1XTHQoOZP86JjpeQqai4qJ/wA/PHSrcSCTMNoLtBJNPm0xYCC2METZqvNcgFR+xcFQYgiciLkyKBFx1DX7PqwwDFj3nwNE0Koji/N9q/8AfEToLksC45566fYmGU7Sjd4uS3wbq6RwAtES64iRVVPsXy+7BB2i7cECF8uy" +
                     "DCGPmqqqqmqr964E44hajxGFHiRURPLTAMS+xluO8S2Jr566a4GRDK5lpZDgiioZJ92vli2gltjJZNNh5kYOj1iI1UoBWOqLtyEiqJWqKoXEhvPQk0XlgDjXtDINxgxIl+zHSGpTwJW56oJqOtjX2/s4nxDCjoUx3+/4z//Z",
-                    Term_of_Receipt = new DateTime(2016, 7, 28, 19, 21, 2), // год - месяц - день - час - минута - секунда
-                    Frames_Coordinates = new List<Frame>()
-                    {
-                        new Frame()
-                        {
-                            Top_Left_Corner_Coord = new int[] { 678, 2345 },
-                            Frame_Height = 345,
-                            Frame_Width = 678
-                        }
-                    },
+                    Term_of_Receipt = DateTime.Now,
                     AccountID = new Guid("C370B962-0EB5-404C-B3D6-8373B79FEB92")
                 },
 
-                new Image()
+                new ImageConfiguration()
                 {
-                    Image_ID = new Guid("8D6C5A2E-0872-45E4-86B1-700ACB54BF5A"),
                     Image_Base64 = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCg" +
                     "oKCgoKCgoKCgoKCgoKCgoKCj/wgARCAD+AUADASIAAhEBAxEB/8QAGwAAAwEBAQEBAAAAAAAAAAAAAgMEAQUABgf/xAAYAQEBAQEBAAAAAAAAAAAAAAABAAIDBP/aAAwDAQACEAMQAAAB+SPx8e/i0mw8OtLxVh+YI6e1h6dBjsFePypVPVXhNerfMFki0ElylTJTYskjaOszLbuWYXLEBLBD3sLpnhWC" +
                     "3NYjA2PcMdLNoiwq0xMvb4pwWYMaLlaypgs6CxDCYrFMQlg+kqQg4QiNM3kHREtRSnOlYWZepuEZ0hLURgdEYkRkByZgZEQbR6Ot4CXQqcvefZuMpbfMCqE0toeJQM8iVsVXmeCXpWIhhDjQCQZuoQnZJihGk4nVSc9NEYtLD05X5uMOHJvNIMX0Eh5aO0FNfHD7NeoKZnDpSokozc0q2eWT4GUBF9FPJ" +
@@ -271,16 +244,7 @@ namespace ProductRecognition.Persistence.ContextsDB
                     "V5/BRFxuGtXSpe77lk6pgzku5lORXWWJXMyF8TBfX/yncWq4ie0kMM2DEC0Xo49xzLflO4DtMMY8Rzep/ca28AfiEHMI91CIZUTPk3v6cRxaW4LeIVDLT+oi26r9Im4t0SWHZvPmCA1ZiOFwOYuRKpd99wAIqjmOQUEx7lyCmh7qKbZoI7M1YDdXUpA7r+5YWqTEvKtIfbFKqiD0BYsv8TzYGUB7/glN" +
                     "mVGy0V9SqFszjmcdA/c5Ze/MwuEJjVJR5myBheJyu6lY7AvzMJALc9RJXu5Mk6oLxxEtmUYxq0l3zZGGRX9dSqNrJXMdvLKw5LjmHbH1CIeDRQgNl5hu0Tetw0jdxtIrXvcynoGThviGScAMQkdmH5lrFCkJ1xLH5gLEChrfmAF3DyLgP7hQCgV03GuJB+XiJQp5jOSgJXZw/UusMxXRaBS8kBndmBR3L" +
                     "RVM4V/X/wAJpjuVF4MyOdErU7siEKVmBN7Q2kzgMC8WWxKECUA6xPOEp4IC1lz8P6nMNmZbkKXFFHPeVdPRB9Am7YHCOrXgikgQa8QlGgAHzFYcCElFWtfMN+llXyCZUXcuT1CwJBNeWYisOPMPEPrLGbYx2m9Q+pvpGjX0iWuWFESLyYRiYFRn/9k=",
-                    Term_of_Receipt = new DateTime(2017, 8, 29, 10, 11, 23), // год - месяц - день - час - минута - секунда
-                    Frames_Coordinates = new List<Frame>()
-                    {
-                        new Frame()
-                        {
-                            Top_Left_Corner_Coord = new int[] { 7, 265 },
-                            Frame_Height = 76,
-                            Frame_Width = 765
-                        }
-                    },
+                    Term_of_Receipt = DateTime.Now, // год - месяц - день - час - минута - секунда
                     AccountID = new Guid("DF52BCA9-3E33-489E-8CE5-CD665C163589")
                 }
             };
