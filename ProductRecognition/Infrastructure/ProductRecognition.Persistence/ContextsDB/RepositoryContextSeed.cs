@@ -1,22 +1,50 @@
 ﻿using System;
 using MongoDB.Driver;
 using System.Collections.Generic;
-using ProductRecognition.Domain.Entities;
 using ProductRecognition.Persistence.Configuration;
-
 
 namespace ProductRecognition.Persistence.ContextsDB
 {
-    public class ImageContextSeed
+    public class RepositoryContextSeed
     {
-        public static void SeedData(IMongoCollection<ImageConfiguration> imageCollection)
+        public static void SeedData(IMongoCollection<AccountConfiguration> accountCollection, IMongoCollection<ImageConfiguration> imageCollection, IMongoCollection<ProductInImageConfiguration> productinimageCollection, IMongoCollection<ProductConfiguration> productCollection, IMongoCollection<ProductFrameConfiguration> productframeCollection)
         {
+            bool existAccount = accountCollection.Find(p => true).Any();
             bool existImage = imageCollection.Find(p => true).Any();
+            bool existProductInImage = productinimageCollection.Find(p => true).Any();
+            bool existProduct = productCollection.Find(p => true).Any();
+            bool existProductFrame = productframeCollection.Find(p => true).Any();
 
-            if (!existImage)
+            if (!existAccount && !existImage && !existProduct && !existProductInImage && !existProductFrame)
             {
+                accountCollection.InsertManyAsync(GetPreconfiguredAccounts());
                 imageCollection.InsertManyAsync(GetPreconfiguredImages());
+                productinimageCollection.InsertManyAsync(GetPreconfiguredProductsInImages());
+                productCollection.InsertManyAsync(GetPreconfiguredProducts());
+                productframeCollection.InsertManyAsync(GetPreconfiguredProductsFrames());
             }
+        }
+
+        private static IEnumerable<AccountConfiguration> GetPreconfiguredAccounts()
+        {
+            return new List<AccountConfiguration>()
+            {
+                new AccountConfiguration()
+                {
+                    Account_ID = new Guid("C370B962-0EB5-404C-B3D6-8373B79FEB92"),
+                    Username = "Владимир"
+                },
+                new AccountConfiguration()
+                {
+                    Account_ID = new Guid("817D8895-4A86-4D83-9CAB-44C6ADDA1E99"),
+                    Username = "Евгений"
+                },
+                new AccountConfiguration()
+                {
+                    Account_ID = new Guid("DF52BCA9-3E33-489E-8CE5-CD665C163589"),
+                    Username = "Екатерина"
+                }
+            };
         }
 
         private static IEnumerable<ImageConfiguration> GetPreconfiguredImages()
@@ -246,6 +274,78 @@ namespace ProductRecognition.Persistence.ContextsDB
                     "RVM4V/X/wAJpjuVF4MyOdErU7siEKVmBN7Q2kzgMC8WWxKECUA6xPOEp4IC1lz8P6nMNmZbkKXFFHPeVdPRB9Am7YHCOrXgikgQa8QlGgAHzFYcCElFWtfMN+llXyCZUXcuT1CwJBNeWYisOPMPEPrLGbYx2m9Q+pvpGjX0iWuWFESLyYRiYFRn/9k=",
                     Term_of_Receipt = DateTime.Now, // год - месяц - день - час - минута - секунда
                     AccountID = new Guid("DF52BCA9-3E33-489E-8CE5-CD665C163589")
+                }
+            };
+        }
+
+        private static IEnumerable<ProductInImageConfiguration> GetPreconfiguredProductsInImages()
+        {
+            return new List<ProductInImageConfiguration>()
+            {
+                new ProductInImageConfiguration()
+                {
+                    ImageID = new Guid("6b62cd34-56b3-4e94-9ab6-ae9d00b3e3e9"),
+                    ProductID = new Guid("730b2a39-cb74-4eb0-ab90-43de3970caae")
+                },
+                new ProductInImageConfiguration()
+                {
+                    ImageID = new Guid("6b62cd34-56b3-4e94-9ab6-ae9d00b3e3e9"),
+                    ProductID = new Guid("f35200f7-bd6c-4110-b3d3-72f6378634a8")
+                },
+                new ProductInImageConfiguration()
+                {
+                    ImageID = new Guid("78207739-bbd2-4e05-a2a5-ae9d00b3e3e9"),
+                    ProductID = new Guid("4eea67a3-9b8c-47a5-b19c-5dac727d7cab")
+                }
+            };
+        }
+
+        private static IEnumerable<ProductConfiguration> GetPreconfiguredProducts()
+        {
+            return new List<ProductConfiguration>()
+            {
+                new ProductConfiguration()
+                {
+                    Product_ID = new Guid("730b2a39-cb74-4eb0-ab90-43de3970caae"),
+                    Name = "Сывороточный напиток. Мажитэль ананас манго"
+                },
+                new ProductConfiguration()
+                {
+                    Product_ID = new Guid("f35200f7-bd6c-4110-b3d3-72f6378634a8"),
+                    Name = "Йогурт. Активиа чернослив"
+                },
+                new ProductConfiguration()
+                {
+                    Product_ID = new Guid("4eea67a3-9b8c-47a5-b19c-5dac727d7cab"),
+                    Name = "Йогурт. Активиа киви и мюсли"
+                }
+            };
+        }
+
+        private static IEnumerable<ProductFrameConfiguration> GetPreconfiguredProductsFrames()
+        {
+            return new List<ProductFrameConfiguration>()
+            {
+                new ProductFrameConfiguration()
+                {
+                    Top_Left_Corner_Coord = new int[] { 165, 2768 },
+                    Frame_Height = 452,
+                    Frame_Width = 352,
+                    ProductInImageID = new Guid("a159283a-e0d1-4c32-90e5-c879534b394c"),
+                },
+                new ProductFrameConfiguration()
+                {
+                    Top_Left_Corner_Coord = new int[] { 974, 363 },
+                    Frame_Height = 789,
+                    Frame_Width = 43,
+                    ProductInImageID = new Guid("e81c5943-21ad-4d4b-931e-766a0ac626a7"),
+                },
+                new ProductFrameConfiguration()
+                {
+                    Top_Left_Corner_Coord = new int[] { 95, 356 },
+                    Frame_Height = 467,
+                    Frame_Width = 642,
+                    ProductInImageID = new Guid("cea66ef0-e1a8-46ca-b6c1-c4ec4b9a4ad1"),
                 }
             };
         }

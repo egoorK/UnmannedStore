@@ -15,8 +15,4 @@
     <ProjectReference Include="..\ProductRecognition.Domain\ProductRecognition.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Contracts\Infrastructure\" />
-  </ItemGroup>
-
 </Project>

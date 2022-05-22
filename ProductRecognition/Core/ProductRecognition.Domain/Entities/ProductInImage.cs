@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ProductRecognition.Domain.Entities
 {
-    public class QuantityOfGoods
+    public class ProductInImage
     {
+        public Guid ProductInImage_ID { get; set; }
         public Guid ImageID { get; set; }
         public Guid ProductID { get; set; }
-        public int Quantity { get; set; }
     }
 }

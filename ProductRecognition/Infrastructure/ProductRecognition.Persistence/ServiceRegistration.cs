@@ -10,7 +10,7 @@ namespace ProductRecognition.Persistence
     {
         public static IServiceCollection AddPersistenceServices(this IServiceCollection services)
         {
-            services.AddScoped<IImageContext, ImageContext>();
+            services.AddScoped<IRepositoryContext, RepositoryContext>();
             services.AddScoped<IImageRepository, ImageRepository>(); // Scoped - тип cервисов, создаваемых механизмом Depedency Injection (для каждого запроса создается свой объект сервиса)
             return services;
         }

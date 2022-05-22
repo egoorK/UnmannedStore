@@ -10,9 +10,9 @@ namespace ProductRecognition.Persistence.Repositories
 {
     public class ImageRepository : IImageRepository
     {
-        private readonly IImageContext _dbContext;
+        private readonly IRepositoryContext _dbContext;
 
-        public ImageRepository(IImageContext dbContext)
+        public ImageRepository(IRepositoryContext dbContext)
         {
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         }
