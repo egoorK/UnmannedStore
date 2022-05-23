@@ -1,6 +1,5 @@
 ﻿using System;
 using MediatR;
-using System.Collections.Generic;
 
 namespace Clients.Application.Features.Accounts.Commands.CreateAccount
 {

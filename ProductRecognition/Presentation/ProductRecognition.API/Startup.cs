@@ -12,6 +12,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ProductRecognition.Application;
 using ProductRecognition.Persistence;
+using Confluent.Kafka;
 
 namespace ProductRecognition.API
 {
