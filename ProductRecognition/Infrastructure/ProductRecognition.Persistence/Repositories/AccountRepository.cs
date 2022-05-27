@@ -1,4 +1,5 @@
 ﻿using System;
+using MongoDB.Driver;
 using System.Threading.Tasks;
 using ProductRecognition.Domain.Entities;
 using ProductRecognition.Persistence.Configuration;
@@ -26,6 +27,22 @@ namespace ProductRecognition.Persistence.Repositories
             };
 
             await _dbContext.Accounts.InsertOneAsync(entityToDatabase);
+        }
+
+        public async Task UpdateAsync(Account entity)
+        {
+            var update = Builders<AccountConfiguration>.Update
+                    .Set(c => c.Account_ID, entity.Account_ID)
+                    .Set(c => c.Username, entity.Username);
+
+            await _dbContext.Accounts.UpdateOneAsync(filter: g => g.Account_ID == entity.Account_ID, update);
+        }
+
+        public async Task DeleteAsync(Guid entityId)
+        {
+            FilterDefinition<AccountConfiguration> filter = Builders<AccountConfiguration>.Filter.Eq(p => p.Account_ID, entityId);
+
+            await _dbContext.Accounts.DeleteOneAsync(filter);
         }
     }
 }

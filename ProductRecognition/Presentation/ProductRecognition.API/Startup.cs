@@ -1,16 +1,14 @@
 using System;
-using System.Net;
 using MassTransit;
-using System.Reflection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using ProductRecognition.Application;
 using ProductRecognition.Persistence;
-using ProductRecognition.API.EventBus;
+using ProductRecognition.API.Consumers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using ProductRecognition.Application.Features.Accounts.Commands.CreateAccount;
+using ProductRecognition.Infrastructure.DTOForEvents;
 
 namespace ProductRecognition.API
 {
@@ -43,7 +41,7 @@ namespace ProductRecognition.API
                     {
                         k.Host("kafka:9092");
 
-                        k.TopicEndpoint<CreateAccountCommand>("accountEvents", "accountEvents-consumer-group", e =>
+                        k.TopicEndpoint<AccountCommandEvent>("accountEvents", "accountEvents-consumer-group-1", e =>
                         {
                             e.AutoOffsetReset = Confluent.Kafka.AutoOffsetReset.Earliest;
                             e.CheckpointInterval = TimeSpan.FromSeconds(10);

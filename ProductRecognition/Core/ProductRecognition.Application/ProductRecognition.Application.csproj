@@ -18,8 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Accounts\Commands\UpdateAccount\" />
-    <Folder Include="Features\Accounts\Commands\DeleteAccount\" />
+    <Folder Include="Contracts\Infrastructure\" />
   </ItemGroup>
 
 </Project>

@@ -6,23 +6,23 @@ using System.Threading.Tasks;
 using ProductRecognition.Domain.Entities;
 using ProductRecognition.Application.Contracts.Persistence;
 
-namespace ProductRecognition.Application.Features.Accounts.Commands.CreateAccount
+namespace ProductRecognition.Application.Features.Accounts.Commands.DeleteAccount
 {
-    public class CreateAccountCommandHandler : IRequestHandler<CreateAccountCommand, Unit>
+    public class DeleteAccountCommandHandler : IRequestHandler<DeleteAccountCommand, Unit>
     {
         private readonly IMapper _mapper;
         private readonly IAccountRepository _accountRepository;
 
-        public CreateAccountCommandHandler(IMapper mapper, IAccountRepository accountRepository)
+        public DeleteAccountCommandHandler(IMapper mapper, IAccountRepository accountRepository)
         {
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _accountRepository = accountRepository ?? throw new ArgumentNullException(nameof(accountRepository));
         }
 
-        public async Task<Unit> Handle(CreateAccountCommand request, CancellationToken cancellationToken) // Реализует обработку запроса от Контроллера, переданного через Медиатор 
+        public async Task<Unit> Handle(DeleteAccountCommand request, CancellationToken cancellationToken) // Реализует обработку запроса от Контроллера, переданного через Медиатор 
         {
             var accountEntity = _mapper.Map<Account>(request);
-            await _accountRepository.AddAsync(accountEntity);
+            await _accountRepository.DeleteAsync(accountEntity.Account_ID);
 
             return Unit.Value;
         }

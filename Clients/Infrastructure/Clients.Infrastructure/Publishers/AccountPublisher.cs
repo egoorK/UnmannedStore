@@ -23,7 +23,7 @@ namespace Clients.Infrastructure.Publishers
             var topicName = _configuration.GetValue<string>("TopicName"); // Работает вместе с NuGet "Microsoft.Extensions.Configuration.Binder"
             var message = new Message<int, string>
             {
-                Key = 14, // Произвольное значение
+                Key = 1, // Произвольное значение
                 Value = JsonSerializer.Serialize(entity)
             };
 
