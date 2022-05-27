@@ -6,7 +6,6 @@ using ProductRecognition.Persistence.Configuration;
 using ProductRecognition.Persistence.ContextsDB.Contracts;
 using ProductRecognition.Application.Contracts.Persistence;
 
-
 namespace ProductRecognition.Persistence.Repositories
 {
     public class AccountRepository : IAccountRepository

@@ -7,6 +7,9 @@ using ProductRecognition.Application.Features.Images.Queries.GetImageById;
 using ProductRecognition.Application.Features.Accounts.Commands.CreateAccount;
 using ProductRecognition.Application.Features.Accounts.Commands.UpdateAccount;
 using ProductRecognition.Application.Features.Accounts.Commands.DeleteAccount;
+using ProductRecognition.Application.Features.Products.Commands.CreateProduct;
+using ProductRecognition.Application.Features.Products.Commands.UpdateProduct;
+using ProductRecognition.Application.Features.Products.Commands.DeleteProduct;
 
 namespace ProductRecognition.Application.Mappings
 {
@@ -35,6 +38,12 @@ namespace ProductRecognition.Application.Mappings
             CreateMap<Account, UpdateAccountCommand>().ReverseMap();
             CreateMap<Account, DeleteAccountCommand>()
                 .ForMember(dest => dest.Account_ID, act => act.MapFrom(src => src.Account_ID))
+                .ReverseMap();
+
+            CreateMap<Product, CreateProductCommand>().ReverseMap();
+            CreateMap<Product, UpdateProductCommand>().ReverseMap();
+            CreateMap<Product, DeleteProductCommand>()
+                .ForMember(dest => dest.Product_ID, act => act.MapFrom(src => src.Product_ID))
                 .ReverseMap();
         }
     }

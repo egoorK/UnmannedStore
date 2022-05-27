@@ -49,8 +49,35 @@ namespace ProductRecognition.API
 
                             e.CreateIfMissing(t =>
                             {
-                                t.NumPartitions = 1; //number of partitions
-                                //t.ReplicationFactor = 1; //number of replicas
+                                t.NumPartitions = 1; // Количество партиций в топике
+                                //t.ReplicationFactor = 1; // Количество реплик партиции
+                            });
+                        });
+                    });
+                });
+            });
+
+            services.AddMassTransit(config =>
+            {
+                config.UsingRabbitMq((ctx, cfg) => cfg.ConfigureEndpoints(ctx));
+
+                config.AddRider(rider =>
+                {
+                    rider.AddConsumer<ProductConsumer>();
+
+                    rider.UsingKafka((context, k) =>
+                    {
+                        k.Host("kafka:9092");
+
+                        k.TopicEndpoint<ProductCommandEvent>("productEvents", "productEvents-consumer-group-1", e =>
+                        {
+                            e.AutoOffsetReset = Confluent.Kafka.AutoOffsetReset.Earliest;
+                            e.CheckpointInterval = TimeSpan.FromSeconds(10);
+                            e.ConfigureConsumer<ProductConsumer>(context);
+
+                            e.CreateIfMissing(t =>
+                            {
+                                t.NumPartitions = 1;
                             });
                         });
                     });
@@ -58,7 +85,9 @@ namespace ProductRecognition.API
             });
 
             services.AddMassTransitHostedService(); //не работает mongo для версии 3.1 (5.0?). использовать БЕЗ true!!!
+            
             services.AddScoped<AccountConsumer>();
+            services.AddScoped<ProductConsumer>();
         }
 
         //private static string GetUniqueName(string eventName)
