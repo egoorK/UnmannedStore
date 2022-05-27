@@ -4,7 +4,8 @@ using System;
 using System.Threading.Tasks;
 using ProductRecognition.Application.Features.Accounts.Commands.CreateAccount;
 
-namespace ProductRecognition.Infrastructure.Consumers
+
+namespace ProductRecognition.API.EventBus
 {
     public class AccountConsumer : IConsumer<CreateAccountCommand>
     {

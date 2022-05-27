@@ -1,5 +1,5 @@
-﻿using System;
-using MediatR;
+﻿using MediatR;
+using System;
 using AutoMapper;
 using System.Threading;
 using System.Threading.Tasks;
@@ -8,7 +8,7 @@ using ProductRecognition.Application.Contracts.Persistence;
 
 namespace ProductRecognition.Application.Features.Accounts.Commands.CreateAccount
 {
-    public class CreateAccountCommandHandler : IRequestHandler<CreateAccountCommand>
+    public class CreateAccountCommandHandler : IRequestHandler<CreateAccountCommand, Unit>
     {
         private readonly IMapper _mapper;
         private readonly IAccountRepository _accountRepository;
@@ -23,7 +23,7 @@ namespace ProductRecognition.Application.Features.Accounts.Commands.CreateAccoun
         {
             var accountEntity = _mapper.Map<Account>(request);
             await _accountRepository.AddAsync(accountEntity);
-
+            //Console.WriteLine("ИДЕНТИФИКАТОР СООБЩЕНИЯ: " + Convert.ToString(accountEntity.Account_ID));
             return Unit.Value;
         }
     }

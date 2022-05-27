@@ -1,18 +1,16 @@
+using System;
+using System.Net;
+using MassTransit;
+using System.Reflection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using ProductRecognition.Application;
 using ProductRecognition.Persistence;
-using Confluent.Kafka;
+using ProductRecognition.API.EventBus;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using ProductRecognition.Application.Features.Accounts.Commands.CreateAccount;
 
 namespace ProductRecognition.API
 {
@@ -32,7 +30,45 @@ namespace ProductRecognition.API
             services.AddPersistenceServices();
             services.AddAutoMapper(typeof(Startup));
             services.AddControllers();
+
+            services.AddMassTransit(config =>
+            {
+                config.UsingRabbitMq((ctx, cfg) => cfg.ConfigureEndpoints(ctx));
+
+                config.AddRider(rider =>
+                {
+                    rider.AddConsumer<AccountConsumer>();
+
+                    rider.UsingKafka((context, k) =>
+                    {
+                        k.Host("kafka:9092");
+
+                        k.TopicEndpoint<CreateAccountCommand>("accountEvents", "accountEvents-consumer-group", e =>
+                        {
+                            e.AutoOffsetReset = Confluent.Kafka.AutoOffsetReset.Earliest;
+                            e.CheckpointInterval = TimeSpan.FromSeconds(10);
+                            e.ConfigureConsumer<AccountConsumer>(context);
+
+                            e.CreateIfMissing(t =>
+                            {
+                                t.NumPartitions = 1; //number of partitions
+                                //t.ReplicationFactor = 1; //number of replicas
+                            });
+                        });
+                    });
+                });
+            });
+
+            services.AddMassTransitHostedService(); //не работает mongo для версии 3.1 (5.0?). использовать БЕЗ true!!!
+            services.AddScoped<AccountConsumer>();
         }
+
+        //private static string GetUniqueName(string eventName)
+        //{
+        //    string hostName = Dns.GetHostName();
+        //    string callingAssembly = Assembly.GetCallingAssembly().GetName().Name;
+        //    return $"{hostName}.{callingAssembly}.{eventName}";
+        //}
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -52,6 +88,13 @@ namespace ProductRecognition.API
             {
                 endpoints.MapControllers();
             });
+
+            //var lifetime = app.ApplicationServices.GetRequiredService<IHostApplicationLifetime>();
+
+            //lifetime.ApplicationStopping.Register(() =>
+            //{
+            //    Console.WriteLine("ApplicationStopping");
+            //});
         }
     }
 }

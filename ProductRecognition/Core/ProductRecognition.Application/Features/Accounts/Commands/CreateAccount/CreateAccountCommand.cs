@@ -1,9 +1,9 @@
-﻿using MediatR;
-using System;
+﻿using System;
+using MediatR;
 
 namespace ProductRecognition.Application.Features.Accounts.Commands.CreateAccount
 {
-    public class CreateAccountCommand : IRequest
+    public class CreateAccountCommand : IRequest<Unit>
     {
         public string Event_Type { get; set; } = "created";
         public Guid Account_ID { get; set; }

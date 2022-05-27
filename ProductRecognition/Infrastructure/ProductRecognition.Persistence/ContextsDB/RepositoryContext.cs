@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using ProductRecognition.Persistence.Configuration;
 using ProductRecognition.Persistence.ContextsDB.Contracts;
+using System.Security.Cryptography.X509Certificates;
 
 namespace ProductRecognition.Persistence.ContextsDB
 {
