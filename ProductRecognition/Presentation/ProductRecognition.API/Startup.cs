@@ -1,5 +1,6 @@
 using System;
 using MassTransit;
+using Confluent.Kafka;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
@@ -8,7 +9,10 @@ using ProductRecognition.Persistence;
 using ProductRecognition.API.Consumers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using ProductRecognition.Infrastructure.Publishers;
 using ProductRecognition.Infrastructure.DTOForEvents;
+using ProductRecognition.Application.Contracts.Infrastructure;
+
 
 namespace ProductRecognition.API
 {
@@ -29,6 +33,28 @@ namespace ProductRecognition.API
             services.AddAutoMapper(typeof(Startup));
             services.AddControllers();
 
+            services.AddScoped(x =>
+            {
+                var bootstrapperServer = Configuration.GetValue<string>("BootstrapperServer");
+                var producerConfig = new ProducerConfig
+                {
+                    BootstrapServers = bootstrapperServer,
+                    EnableIdempotence = true,
+                    Acks = Acks.All,
+                    LingerMs = 50, // Задержка в мс для ожидания накопления сообщения в очереди
+                    MessageMaxBytes = 10485760,
+                    BatchNumMessages = 1,
+                    BatchSize = 10485761
+                };
+                // producerConfig.BatchNumMessages
+                
+
+                return new ProducerBuilder<int, string>(producerConfig).Build();
+            });
+
+            services.AddScoped<IImagePublisher, ImagePublisher>();
+
+
             services.AddMassTransit(config =>
             {
                 config.UsingRabbitMq((ctx, cfg) => cfg.ConfigureEndpoints(ctx));
@@ -36,6 +62,7 @@ namespace ProductRecognition.API
                 config.AddRider(rider =>
                 {
                     rider.AddConsumer<AccountConsumer>();
+                    rider.AddConsumer<ProductConsumer>();
 
                     rider.UsingKafka((context, k) =>
                     {
@@ -53,21 +80,6 @@ namespace ProductRecognition.API
                                 //t.ReplicationFactor = 1; // Количество реплик партиции
                             });
                         });
-                    });
-                });
-            });
-
-            services.AddMassTransit(config =>
-            {
-                config.UsingRabbitMq((ctx, cfg) => cfg.ConfigureEndpoints(ctx));
-
-                config.AddRider(rider =>
-                {
-                    rider.AddConsumer<ProductConsumer>();
-
-                    rider.UsingKafka((context, k) =>
-                    {
-                        k.Host("kafka:9092");
 
                         k.TopicEndpoint<ProductCommandEvent>("productEvents", "productEvents-consumer-group-1", e =>
                         {
@@ -80,12 +92,13 @@ namespace ProductRecognition.API
                                 t.NumPartitions = 1;
                             });
                         });
+
                     });
                 });
             });
 
             services.AddMassTransitHostedService(); //не работает mongo для версии 3.1 (5.0?). использовать БЕЗ true!!!
-            
+
             services.AddScoped<AccountConsumer>();
             services.AddScoped<ProductConsumer>();
         }
@@ -124,4 +137,6 @@ namespace ProductRecognition.API
             //});
         }
     }
+
+    public interface ISecondBus : IBus { }
 }

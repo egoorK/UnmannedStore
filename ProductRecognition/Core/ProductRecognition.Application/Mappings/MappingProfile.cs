@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ProductRecognition.Domain.Entities;
+using ProductRecognition.Application.DTOForEvents;
 using ProductRecognition.Application.Features.Images.Commands.SaveImage;
 using ProductRecognition.Application.Features.Images.Commands.UpdateImage;
 using ProductRecognition.Application.Features.Images.Commands.DeleteImage;
@@ -44,6 +45,10 @@ namespace ProductRecognition.Application.Mappings
             CreateMap<Product, UpdateProductCommand>().ReverseMap();
             CreateMap<Product, DeleteProductCommand>()
                 .ForMember(dest => dest.Product_ID, act => act.MapFrom(src => src.Product_ID))
+                .ReverseMap();
+
+            CreateMap<SaveImageCommand, ImageRecognizeEvent>()
+                .ForMember(dest => dest.Image_Base64, act => act.MapFrom(src => src.Image_Base64))
                 .ReverseMap();
         }
     }
