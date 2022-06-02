@@ -7,5 +7,6 @@ namespace ProductRecognition.Domain.Entities
         public Guid ProductInImage_ID { get; set; }
         public Guid ImageID { get; set; }
         public Guid ProductID { get; set; }
+        public double Probability_recognition { get; set; }
     }
 }

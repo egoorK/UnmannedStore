@@ -14,6 +14,7 @@ namespace ProductRecognition.Persistence
             services.AddScoped<IImageRepository, ImageRepository>(); // Scoped - тип cервисов, создаваемых механизмом Depedency Injection (для каждого запроса создается свой объект сервиса)
             services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IProductInImageRepository, ProductInImageRepository>();
             return services;
         }
     }

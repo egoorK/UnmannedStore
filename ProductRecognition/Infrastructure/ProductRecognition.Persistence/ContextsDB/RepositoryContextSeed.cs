@@ -285,17 +285,20 @@ namespace ProductRecognition.Persistence.ContextsDB
                 new ProductInImageConfiguration()
                 {
                     ImageID = new Guid("6b62cd34-56b3-4e94-9ab6-ae9d00b3e3e9"),
-                    ProductID = new Guid("730b2a39-cb74-4eb0-ab90-43de3970caae")
+                    ProductID = new Guid("730b2a39-cb74-4eb0-ab90-43de3970caae"),
+                    Probability_recognition = 64.3
                 },
                 new ProductInImageConfiguration()
                 {
                     ImageID = new Guid("6b62cd34-56b3-4e94-9ab6-ae9d00b3e3e9"),
-                    ProductID = new Guid("f35200f7-bd6c-4110-b3d3-72f6378634a8")
+                    ProductID = new Guid("f35200f7-bd6c-4110-b3d3-72f6378634a8"),
+                    Probability_recognition = 87.1
                 },
                 new ProductInImageConfiguration()
                 {
                     ImageID = new Guid("78207739-bbd2-4e05-a2a5-ae9d00b3e3e9"),
-                    ProductID = new Guid("4eea67a3-9b8c-47a5-b19c-5dac727d7cab")
+                    ProductID = new Guid("4eea67a3-9b8c-47a5-b19c-5dac727d7cab"),
+                    Probability_recognition = 14.9
                 }
             };
         }

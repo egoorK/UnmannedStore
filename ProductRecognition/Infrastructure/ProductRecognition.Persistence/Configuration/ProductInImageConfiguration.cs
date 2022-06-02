@@ -16,5 +16,8 @@ namespace ProductRecognition.Persistence.Configuration
         [BsonRepresentation(BsonType.String)]
         [BsonElement("ProductID")]
         public Guid ProductID { get; set; }
+        [BsonRepresentation(BsonType.Double)]
+        [BsonElement("Probability_recognition")]
+        public double Probability_recognition { get; set; }
     }
 }
