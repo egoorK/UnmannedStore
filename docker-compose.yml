@@ -25,6 +25,9 @@ services:
       context: .
       dockerfile: ProductRecognition/Presentation/ProductRecognition.API/Dockerfile
 
+  webapp:
+    image: dockerimgek/webappprodtest:latest
+
 volumes:
   postgres_data:
   mongo_data:

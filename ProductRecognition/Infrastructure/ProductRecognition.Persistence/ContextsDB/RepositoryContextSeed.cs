@@ -331,21 +331,24 @@ namespace ProductRecognition.Persistence.ContextsDB
             {
                 new ProductFrameConfiguration()
                 {
-                    Top_Left_Corner_Coord = new int[] { 165, 2768 },
+                    Top_Left_Corner_Coord_X = 165,
+                    Top_Left_Corner_Coord_Y = 2780,
                     Frame_Height = 452,
                     Frame_Width = 352,
                     ProductInImageID = new Guid("a159283a-e0d1-4c32-90e5-c879534b394c"),
                 },
                 new ProductFrameConfiguration()
                 {
-                    Top_Left_Corner_Coord = new int[] { 974, 363 },
+                    Top_Left_Corner_Coord_X = 974,
+                    Top_Left_Corner_Coord_Y =  363,
                     Frame_Height = 789,
                     Frame_Width = 43,
                     ProductInImageID = new Guid("e81c5943-21ad-4d4b-931e-766a0ac626a7"),
                 },
                 new ProductFrameConfiguration()
                 {
-                    Top_Left_Corner_Coord = new int[] { 95, 356 },
+                    Top_Left_Corner_Coord_X = 95,
+                    Top_Left_Corner_Coord_Y = 356,
                     Frame_Height = 467,
                     Frame_Width = 642,
                     ProductInImageID = new Guid("cea66ef0-e1a8-46ca-b6c1-c4ec4b9a4ad1"),

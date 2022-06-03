@@ -11,8 +11,11 @@ namespace ProductRecognition.Persistence.Configuration
         [BsonRepresentation(BsonType.String)]
         public Guid ProductFrame_ID { get; set; }
         [BsonIgnoreIfDefault]
-        [BsonElement("Top_Left_Corner_Coord")]
-        public int[] Top_Left_Corner_Coord { get; set; } // Координаты верхнего левого угла рамки
+        [BsonElement("Top_Left_Corner_Coord_X")]
+        public int Top_Left_Corner_Coord_X { get; set; } 
+        [BsonIgnoreIfDefault]
+        [BsonElement("Top_Left_Corner_Coord_Y")]
+        public int Top_Left_Corner_Coord_Y { get; set; } 
         [BsonIgnoreIfDefault]
         [BsonElement("Frame_Height")]
         public int Frame_Height { get; set; } // Высота рамки

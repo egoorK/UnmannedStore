@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Net;
 using ProductRecognition.Application.Features.Images.Commands.SaveImage;
 using ProductRecognition.Application.Features.Images.Commands.UpdateImage;
@@ -9,6 +8,7 @@ using ProductRecognition.Application.Features.Images.Commands.DeleteImage;
 using ProductRecognition.Application.Features.Images.Queries.GetImageById;
 using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
+
 
 namespace ProductRecognition.API.Controllers
 {

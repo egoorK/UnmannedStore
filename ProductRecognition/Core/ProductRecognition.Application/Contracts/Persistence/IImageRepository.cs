@@ -10,5 +10,6 @@ namespace ProductRecognition.Application.Contracts.Persistence
         Task UpdateAsync(Image entity);
         Task DeleteAsync(Guid entityId);
         Task<Image> GetImageByIdAsync(Guid entityId);
+        Task<Guid> GetAccountByIdAsync(Guid entityId);
     }
 }

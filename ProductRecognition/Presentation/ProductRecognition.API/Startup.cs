@@ -13,7 +13,6 @@ using ProductRecognition.Infrastructure.Publishers;
 using ProductRecognition.Infrastructure.DTOForEvents;
 using ProductRecognition.Application.Contracts.Infrastructure;
 
-
 namespace ProductRecognition.API
 {
     public class Startup
@@ -47,12 +46,11 @@ namespace ProductRecognition.API
                     BatchSize = 10485761
                 };
                 // producerConfig.BatchNumMessages
-                
-
                 return new ProducerBuilder<int, string>(producerConfig).Build();
             });
 
             services.AddScoped<IImagePublisher, ImagePublisher>();
+            services.AddScoped<IProductsToCartPublisher, ProductsToCartPublisher>();
 
 
             services.AddMassTransit(config =>
@@ -61,6 +59,7 @@ namespace ProductRecognition.API
 
                 config.AddRider(rider =>
                 {
+                    rider.AddConsumer<ProductRecognizedConsumer>();
                     rider.AddConsumer<AccountConsumer>();
                     rider.AddConsumer<ProductConsumer>();
 
@@ -93,6 +92,18 @@ namespace ProductRecognition.API
                             });
                         });
 
+                        k.TopicEndpoint<ImageRecognizedEvent>("productRecognizedEvents", "productRecognizedEvents-consumer-group-1", e =>
+                        {
+                            e.AutoOffsetReset = Confluent.Kafka.AutoOffsetReset.Earliest;
+                            e.CheckpointInterval = TimeSpan.FromSeconds(10);
+                            e.ConfigureConsumer<ProductRecognizedConsumer>(context);
+
+                            e.CreateIfMissing(t =>
+                            {
+                                t.NumPartitions = 1;
+                            });
+                        });
+
                     });
                 });
             });
@@ -101,14 +112,8 @@ namespace ProductRecognition.API
 
             services.AddScoped<AccountConsumer>();
             services.AddScoped<ProductConsumer>();
+            services.AddScoped<ProductRecognizedConsumer>();
         }
-
-        //private static string GetUniqueName(string eventName)
-        //{
-        //    string hostName = Dns.GetHostName();
-        //    string callingAssembly = Assembly.GetCallingAssembly().GetName().Name;
-        //    return $"{hostName}.{callingAssembly}.{eventName}";
-        //}
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -128,15 +133,6 @@ namespace ProductRecognition.API
             {
                 endpoints.MapControllers();
             });
-
-            //var lifetime = app.ApplicationServices.GetRequiredService<IHostApplicationLifetime>();
-
-            //lifetime.ApplicationStopping.Register(() =>
-            //{
-            //    Console.WriteLine("ApplicationStopping");
-            //});
         }
     }
-
-    public interface ISecondBus : IBus { }
 }

@@ -69,5 +69,12 @@ namespace ProductRecognition.Persistence.Repositories
             
             return result;
         }
+        public async Task<Guid> GetAccountByIdAsync(Guid entityId)
+        {
+            var entityToDatabase = await _dbContext.Images.Find(p => p.Image_ID == entityId).FirstOrDefaultAsync();
+
+            return entityToDatabase.AccountID;
+        }
+
     }
 }

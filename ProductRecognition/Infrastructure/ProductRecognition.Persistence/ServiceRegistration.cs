@@ -15,6 +15,7 @@ namespace ProductRecognition.Persistence
             services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IProductInImageRepository, ProductInImageRepository>();
+            services.AddScoped<IProductFrameRepository, ProductFrameRepository>();
             return services;
         }
     }
