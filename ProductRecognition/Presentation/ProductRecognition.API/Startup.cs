@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using ProductRecognition.Infrastructure.Publishers;
 using ProductRecognition.Infrastructure.DTOForEvents;
 using ProductRecognition.Application.Contracts.Infrastructure;
+using ProductRecognition.Application.Features.ProductsInImages.Commands.CreateProductInImage;
 
 namespace ProductRecognition.API
 {
@@ -92,7 +93,7 @@ namespace ProductRecognition.API
                             });
                         });
 
-                        k.TopicEndpoint<ImageRecognizedEvent>("productRecognizedEvents", "productRecognizedEvents-consumer-group-1", e =>
+                        k.TopicEndpoint<CreateProductInImageCommand>("productRecognizedEvents", "productRecognizedEvents-consumer-group-1", e =>
                         {
                             e.AutoOffsetReset = Confluent.Kafka.AutoOffsetReset.Earliest;
                             e.CheckpointInterval = TimeSpan.FromSeconds(10);
