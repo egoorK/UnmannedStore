@@ -9,7 +9,6 @@ using Clients.Persistence;
 using Clients.Application.Contracts.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Confluent.Kafka;
-using System;
 using Clients.Infrastructure.Publishers;
 
 namespace Clients.API

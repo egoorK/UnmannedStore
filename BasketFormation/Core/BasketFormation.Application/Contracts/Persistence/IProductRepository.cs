@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using BasketFormation.Domain.Entities;
 
 namespace BasketFormation.Application.Contracts.Persistence
@@ -8,6 +7,6 @@ namespace BasketFormation.Application.Contracts.Persistence
     {
         Task AddAsync(Product entity);
         Task UpdateAsync(Product entity);
-        Task DeleteAsync(Guid entityId);
+        Task DeleteAsync(Product entity);
     }
 }

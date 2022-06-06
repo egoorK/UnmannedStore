@@ -22,7 +22,7 @@ namespace BasketFormation.Application.Features.Accounts.Commands.DeleteAccount
         public async Task<Unit> Handle(DeleteAccountCommand request, CancellationToken cancellationToken) // Реализует обработку запроса от Контроллера, переданного через Медиатор 
         {
             var accountEntity = _mapper.Map<Account>(request);
-            await _accountRepository.DeleteAsync(accountEntity.Account_ID);
+            await _accountRepository.DeleteAsync(accountEntity);
 
             return Unit.Value;
         }

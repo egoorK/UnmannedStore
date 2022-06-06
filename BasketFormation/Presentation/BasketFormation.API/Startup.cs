@@ -1,17 +1,16 @@
+using System;
+using MassTransit;
+using BasketFormation.Persitence;
+using BasketFormation.Application;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BasketFormation.Application;
-using BasketFormation.Persitence;
+using Microsoft.EntityFrameworkCore;
+using BasketFormation.API.Consumers;
+using Microsoft.Extensions.Configuration;
+using BasketFormation.Persitence.ContextsDB;
+using Microsoft.Extensions.DependencyInjection;
+using BasketFormation.Infrastructure.DTOForEvents;
 
 namespace BasketFormation.API
 {
@@ -29,12 +28,77 @@ namespace BasketFormation.API
         {
             services.AddApplicationServices();
             services.AddPersistenceServices();
+            services.AddAutoMapper(typeof(Startup));
             services.AddControllers();
+            services.AddDbContext<RepositoryContext>(p => p.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddMassTransit(config =>
+            {
+                config.UsingRabbitMq((ctx, cfg) => cfg.ConfigureEndpoints(ctx));
+
+                config.AddRider(rider =>
+                {
+                    //rider.AddConsumer<ProductRecognizedConsumer>();
+                    rider.AddConsumer<AccountConsumer>();
+                    rider.AddConsumer<ProductConsumer>();
+
+                    rider.UsingKafka((context, k) =>
+                    {
+                        k.Host("kafka:9092");
+
+                        k.TopicEndpoint<AccountCommandEvent>("accountEvents", "accountEvents-consumer-group-2", e =>
+                        {
+                            e.AutoOffsetReset = Confluent.Kafka.AutoOffsetReset.Earliest;
+                            e.CheckpointInterval = TimeSpan.FromSeconds(10);
+                            e.ConfigureConsumer<AccountConsumer>(context);
+
+                            e.CreateIfMissing(t =>
+                            {
+                                t.NumPartitions = 1; // Количество партиций в топике
+                                //t.ReplicationFactor = 1; // Количество реплик партиции
+                            });
+                        });
+
+                        k.TopicEndpoint<ProductCommandEvent>("productEvents", "productEvents-consumer-group-2", e =>
+                        {
+                            e.AutoOffsetReset = Confluent.Kafka.AutoOffsetReset.Earliest;
+                            e.CheckpointInterval = TimeSpan.FromSeconds(10);
+                            e.ConfigureConsumer<ProductConsumer>(context);
+
+                            e.CreateIfMissing(t =>
+                            {
+                                t.NumPartitions = 1;
+                            });
+                        });
+
+                        //k.TopicEndpoint<CreateProductInImageCommand>("productRecognizedEvents", "productRecognizedEvents-consumer-group-1", e =>
+                        //{
+                        //    e.AutoOffsetReset = Confluent.Kafka.AutoOffsetReset.Earliest;
+                        //    e.CheckpointInterval = TimeSpan.FromSeconds(10);
+                        //    e.ConfigureConsumer<ProductRecognizedConsumer>(context);
+
+                        //    e.CreateIfMissing(t =>
+                        //    {
+                        //        t.NumPartitions = 1;
+                        //    });
+                        //});
+
+                    });
+                });
+            });
+
+            services.AddMassTransitHostedService(); //не работает mongo для версии 3.1 (5.0?). использовать БЕЗ true!!!
+
+            services.AddScoped<AccountConsumer>();
+            services.AddScoped<ProductConsumer>();
+            //services.AddScoped<ProductRecognizedConsumer>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            DatabaseManagementService.MigrationInitialisation(app);
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

@@ -1,6 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using BasketFormation.Persitence.Repositories;
+using Microsoft.Extensions.DependencyInjection;
 using BasketFormation.Application.Contracts.Persistence;
-using BasketFormation.Persistence.Repositories;
 
 namespace BasketFormation.Persitence
 {

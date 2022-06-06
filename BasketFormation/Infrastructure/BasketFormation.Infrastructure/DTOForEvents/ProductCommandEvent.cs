@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ProductRecognition.Infrastructure.DTOForEvents
+namespace BasketFormation.Infrastructure.DTOForEvents
 {
     public class ProductCommandEvent
     {
