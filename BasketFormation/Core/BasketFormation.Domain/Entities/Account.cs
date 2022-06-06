@@ -6,7 +6,7 @@ namespace BasketFormation.Domain.Entities
     {
         public Guid Account_ID { get; set; }
         public string Username { get; set; }
-        public ShoppingCart Basket { get; set; } // связь один к одному
+        public ShoppingCart Basket { get; set; } // связь один к одному с корзинами
     }
 }
 

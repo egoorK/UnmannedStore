@@ -11,5 +11,11 @@
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.11.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\BasketFormation.Application\BasketFormation.Application.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\BasketFormation.Infrastructure\BasketFormation.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\BasketFormation.Persitence\BasketFormation.Persitence.csproj" />
+  </ItemGroup>
+
 
 </Project>
