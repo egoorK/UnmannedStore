@@ -2,7 +2,6 @@
 using MediatR;
 using MassTransit;
 using System.Threading.Tasks;
-using ProductRecognition.Infrastructure.DTOForEvents;
 using ProductRecognition.Application.Features.ProductsInImages.Commands.CreateProductInImage;
 
 namespace ProductRecognition.API.Consumers

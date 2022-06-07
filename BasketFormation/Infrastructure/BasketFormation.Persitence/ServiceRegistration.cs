@@ -10,6 +10,7 @@ namespace BasketFormation.Persitence
         {
             services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IShoppingCartRepository, ShoppingCartRepository>();
             return services;
         }
     }

@@ -9,7 +9,6 @@ using ProductRecognition.Application.Contracts.Persistence;
 using ProductRecognition.Application.Contracts.Infrastructure;
 using ProductRecognition.Application.DTOForEvents.ProductRecognized;
 
-
 namespace ProductRecognition.Application.Features.ProductsInImages.Commands.CreateProductInImage
 {
     public class CreateProductInImageCommandHandler : IRequestHandler<CreateProductInImageCommand, Unit>

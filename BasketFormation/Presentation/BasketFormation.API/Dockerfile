@@ -8,6 +8,10 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
 WORKDIR /src
 COPY ["BasketFormation/Presentation/BasketFormation.API/BasketFormation.API.csproj", "BasketFormation/Presentation/BasketFormation.API/"]
+COPY ["BasketFormation/Core/BasketFormation.Application/BasketFormation.Application.csproj", "BasketFormation/Core/BasketFormation.Application/"]
+COPY ["BasketFormation/Core/BasketFormation.Domain/BasketFormation.Domain.csproj", "BasketFormation/Core/BasketFormation.Domain/"]
+COPY ["BasketFormation/Infrastructure/BasketFormation.Infrastructure/BasketFormation.Infrastructure.csproj", "BasketFormation/Infrastructure/BasketFormation.Infrastructure/"]
+COPY ["BasketFormation/Infrastructure/BasketFormation.Persitence/BasketFormation.Persitence.csproj", "BasketFormation/Infrastructure/BasketFormation.Persitence/"]
 RUN dotnet restore "BasketFormation/Presentation/BasketFormation.API/BasketFormation.API.csproj"
 COPY . .
 WORKDIR "/src/BasketFormation/Presentation/BasketFormation.API"

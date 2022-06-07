@@ -11,7 +11,7 @@ services:
     ports:
       - "7001:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_data_clients:/var/lib/postgresql/data
 
   productrecognitiondb:
     container_name: productrecognitiondb
@@ -20,6 +20,18 @@ services:
       - "7002:27017"
     volumes:
       - mongo_data:/data/db
+
+  basketformationdb:
+    container_name: basketformationdb
+    environment:
+      - POSTGRES_USER=pstgrsqluser
+      - POSTGRES_PASSWORD=pstgrs3381
+      - POSTGRES_DB=BasketFormationDB
+    restart: always
+    ports:
+      - "7003:5432"
+    volumes:
+      - postgres_data_basketformation:/var/lib/postgresql/data
 
   zookeeper:
     container_name: zookeeper
@@ -95,19 +107,39 @@ services:
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
       - ~/.aspnet/https:/https:ro
 
-  webapp:
-    container_name: webapp
+  basketformation.api:
+    container_name: basketformation.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
       - ASPNETCORE_HTTPS_PORT=8003
       - ASPNETCORE_Kestrel__Certificates__Default__Password=zUBHaFFxeT
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+      - "DatabaseSettings:ConnectionString=Server=192.168.0.109;Port=7003;Database=BasketFormationDB;User Id=pstgrsqluser;Password=pstgrs3381;"
     depends_on:
+      - basketformationdb
       - kafka
     ports:
       - "8003:443"
       - "8033:80"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+      - ~/.aspnet/https:/https:ro
+
+  webapp:
+    container_name: webapp
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_HTTPS_PORT=8004
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=zUBHaFFxeT
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+    depends_on:
+      - kafka
+    ports:
+      - "8004:443"
+      - "8044:80"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro

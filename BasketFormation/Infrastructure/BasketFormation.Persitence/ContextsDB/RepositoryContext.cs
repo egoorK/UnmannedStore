@@ -85,7 +85,7 @@ namespace BasketFormation.Persitence.ContextsDB
                                   Total_with_discount = 2345.32M  }
                 });
 
-            modelBuilder.Entity<ShoppingCart>().HasMany(a => a.CartContents).WithOne(b => b.ShoppingCart); // Установка связи один-ко-многим (одна корзина может иметь неограниченное количество содержимого)
+            modelBuilder.Entity<ShoppingCart>().HasMany(a => a.CartContents).WithOne(b => b.ShoppingCart).OnDelete(DeleteBehavior.Cascade); ; // Установка связи один-ко-многим (одна корзина может иметь неограниченное количество содержимого)
 
             modelBuilder.Entity<CartContents>().HasData(
                 new CartContents[]

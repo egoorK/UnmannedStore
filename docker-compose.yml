@@ -7,6 +7,9 @@ services:
   productrecognitiondb:
     image: mongo:latest
 
+  basketformationdb:
+    image: postgres:latest
+
   zookeeper:
     image: confluentinc/cp-zookeeper:latest
 
@@ -25,9 +28,16 @@ services:
       context: .
       dockerfile: ProductRecognition/Presentation/ProductRecognition.API/Dockerfile
 
+  basketformation.api:
+    image: ${DOCKER_REGISTRY-}basketformationapi
+    build:
+      context: .
+      dockerfile: BasketFormation/Presentation/BasketFormation.API/Dockerfile
+
   webapp:
     image: dockerimgek/webappprodtest:latest
 
 volumes:
-  postgres_data:
+  postgres_data_clients:
+  postgres_data_basketformation:
   mongo_data:

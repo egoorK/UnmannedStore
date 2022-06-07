@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using BasketFormation.Persitence.ContextsDB;
 using Microsoft.Extensions.DependencyInjection;
 using BasketFormation.Infrastructure.DTOForEvents;
+using BasketFormation.Application.Features.ShoppingsCarts.Commands.CreateShoppingCart;
 
 namespace BasketFormation.API
 {
@@ -38,7 +39,7 @@ namespace BasketFormation.API
 
                 config.AddRider(rider =>
                 {
-                    //rider.AddConsumer<ProductRecognizedConsumer>();
+                    rider.AddConsumer<ProductsToCartConsumer>();
                     rider.AddConsumer<AccountConsumer>();
                     rider.AddConsumer<ProductConsumer>();
 
@@ -71,17 +72,17 @@ namespace BasketFormation.API
                             });
                         });
 
-                        //k.TopicEndpoint<CreateProductInImageCommand>("productRecognizedEvents", "productRecognizedEvents-consumer-group-1", e =>
-                        //{
-                        //    e.AutoOffsetReset = Confluent.Kafka.AutoOffsetReset.Earliest;
-                        //    e.CheckpointInterval = TimeSpan.FromSeconds(10);
-                        //    e.ConfigureConsumer<ProductRecognizedConsumer>(context);
+                        k.TopicEndpoint<CreateShoppingCartCommand>("productsToCartEvents", "productsToCartEvents-consumer-group-1", e =>
+                        {
+                            e.AutoOffsetReset = Confluent.Kafka.AutoOffsetReset.Earliest;
+                            e.CheckpointInterval = TimeSpan.FromSeconds(10);
+                            e.ConfigureConsumer<ProductsToCartConsumer>(context);
 
-                        //    e.CreateIfMissing(t =>
-                        //    {
-                        //        t.NumPartitions = 1;
-                        //    });
-                        //});
+                            e.CreateIfMissing(t =>
+                            {
+                                t.NumPartitions = 1;
+                            });
+                        });
 
                     });
                 });
@@ -91,7 +92,7 @@ namespace BasketFormation.API
 
             services.AddScoped<AccountConsumer>();
             services.AddScoped<ProductConsumer>();
-            //services.AddScoped<ProductRecognizedConsumer>();
+            services.AddScoped<ProductsToCartConsumer>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
