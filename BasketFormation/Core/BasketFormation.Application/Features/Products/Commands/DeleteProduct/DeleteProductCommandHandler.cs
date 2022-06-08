@@ -22,7 +22,7 @@ namespace BasketFormation.Application.Features.Products.Commands.DeleteProduct
         public async Task<Unit> Handle(DeleteProductCommand request, CancellationToken cancellationToken)
         {
             var productEntity = _mapper.Map<Product>(request);
-            await _productRepository.DeleteAsync(productEntity.Product_ID);
+            await _productRepository.DeleteAsync(productEntity);
 
             return Unit.Value;
         }

@@ -63,51 +63,46 @@ namespace BasketFormation.Persitence.ContextsDB
             modelBuilder.Entity<Product>().HasMany(a => a.CartContents).WithOne(b => b.Product); // Установка связи один-ко-многим (один товар может находится во многих корзинах)
 
 
-            modelBuilder.Entity<ShoppingCart>().HasData(
-                new ShoppingCart[]
-                {
-                    new ShoppingCart { ShoppingCart_ID = new Guid("63786dfa-775d-40fb-8649-f519b7a31606"),
-                                  Fill_start_time = new DateTime(2015, 7, 20, 18, 30, 25),
-                                  Fill_end_time = new DateTime(2015, 7, 20, 19, 11, 36),
-                                  Total_without_discount = 568.43M,
-                                  Total_with_discount = 548.32M  },
-
-                    new ShoppingCart { ShoppingCart_ID = new Guid("4e8f87df-e36e-4509-8054-868d67f79db7"),
-                                  Fill_start_time = new DateTime(2016, 8, 21, 11, 32, 23),
-                                  Fill_end_time = new DateTime(2016, 8, 21, 12, 01, 36),
-                                  Total_without_discount = 1538.43M,
-                                  Total_with_discount = 1518.32M  },
-
-                    new ShoppingCart { ShoppingCart_ID = new Guid("432e8565-1d3c-47da-85a0-2777d1bc61ee"),
-                                  Fill_start_time = new DateTime(2017, 3, 21, 14, 30, 25),
-                                  Fill_end_time = new DateTime(2017, 3, 21, 14, 45, 36),
-                                  Total_without_discount = 2578.43M,
-                                  Total_with_discount = 2345.32M  }
-                });
+            //modelBuilder.Entity<ShoppingCart>().HasData(
+            //    new ShoppingCart[]
+            //    {
+            //        new ShoppingCart { ShoppingCart_ID = new Guid("63786dfa-775d-40fb-8649-f519b7a31606"),
+            //                      Fill_start_time = new DateTime(2015, 7, 20, 18, 30, 25),
+            //                      Fill_end_time = new DateTime(2015, 7, 20, 19, 11, 36),
+            //                      Total_without_discount = 609.99M,
+            //                      Total_with_discount = 0M,
+            //                      AccountID = new Guid("C370B962-0EB5-404C-B3D6-8373B79FEB92")  }
+            //    });
 
             modelBuilder.Entity<ShoppingCart>().HasMany(a => a.CartContents).WithOne(b => b.ShoppingCart).OnDelete(DeleteBehavior.Cascade); ; // Установка связи один-ко-многим (одна корзина может иметь неограниченное количество содержимого)
 
-            modelBuilder.Entity<CartContents>().HasData(
-                new CartContents[]
-                {
-                    new CartContents { CartContents_ID = new Guid("59b7f34b-fc15-4f64-a170-949bf515a2fe"),
-                                  Discount_price = 45.32M,
-                                  Quantity = 1,
-                                  Price_incl_quantity = 45.32M,
-                                  Item_number_in_cart = 1  },
+            //modelBuilder.Entity<CartContents>().HasData(
+            //    new CartContents[]
+            //    {
+            //        new CartContents { CartContents_ID = new Guid("59b7f34b-fc15-4f64-a170-949bf515a2fe"),
+            //                      Discount_price = 45.32M,
+            //                      Quantity = 1,
+            //                      Price_incl_quantity = 45.32M,
+            //                      Item_number_in_cart = 1,
+            //                      ProductID = new Guid("730b2a39-cb74-4eb0-ab90-43de3970caae"),
+            //                      ShoppingCartID = new Guid("63786dfa-775d-40fb-8649-f519b7a31606")  },
 
-                    new CartContents { CartContents_ID = new Guid("3c2c3537-703c-4b10-9bbc-5e46c6440d65"),
-                                  Discount_price = 129.56M,
-                                  Quantity = 3,
-                                  Price_incl_quantity = 388.68M,
-                                  Item_number_in_cart = 2  },
+            //        new CartContents { CartContents_ID = new Guid("3c2c3537-703c-4b10-9bbc-5e46c6440d65"),
+            //                      Discount_price = 129.56M,
+            //                      Quantity = 1,
+            //                      Price_incl_quantity = 388.68M,
+            //                      Item_number_in_cart = 2,
+            //                      ProductID = new Guid("f35200f7-bd6c-4110-b3d3-72f6378634a8"),
+            //                      ShoppingCartID = new Guid("63786dfa-775d-40fb-8649-f519b7a31606")  },
 
-                    new CartContents { CartContents_ID = new Guid("a38ae090-64a1-4b17-a3a2-771a354c8a02"),
-                                  Discount_price = 435.11M,
-                                  Quantity = 1,
-                                  Price_incl_quantity = 435.11M,
-                                  Item_number_in_cart = 3  }
-                });
+            //        new CartContents { CartContents_ID = new Guid("a38ae090-64a1-4b17-a3a2-771a354c8a02"),
+            //                      Discount_price = 435.11M,
+            //                      Quantity = 1,
+            //                      Price_incl_quantity = 435.11M,
+            //                      Item_number_in_cart = 3,
+            //                      ProductID = new Guid("4eea67a3-9b8c-47a5-b19c-5dac727d7cab"),
+            //                      ShoppingCartID = new Guid("63786dfa-775d-40fb-8649-f519b7a31606")  }
+            //    });
         }
     }
 }

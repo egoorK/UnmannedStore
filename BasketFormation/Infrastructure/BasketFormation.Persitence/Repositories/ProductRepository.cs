@@ -54,5 +54,11 @@ namespace BasketFormation.Persitence.Repositories
             _dbContext.Products.Remove(productToDelete);
             await _dbContext.SaveChangesAsync();
         }
+
+        public async Task<decimal> GetPriceAsync(Guid entityId)
+        {
+            var productInDataBase = await _dbContext.Products.FindAsync(entityId);
+            return productInDataBase.Unit_price;
+        }
     }
 }

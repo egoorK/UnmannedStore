@@ -24,6 +24,22 @@ namespace BasketFormation.Persitence.Repositories
             return entity.ShoppingCart_ID;
         }
 
+        public async Task UpdateAsync(ShoppingCart entity)
+        {
+            var shoppingCartToUpdate = await _dbContext.ShoppingCarts.FindAsync(entity.ShoppingCart_ID);
+
+            if (shoppingCartToUpdate == null)
+            {
+                //  throw new NotFoundException(nameof(ShoppingCart), request.ShoppingCart_ID);
+            }
+            else
+            {
+                shoppingCartToUpdate.Total_without_discount = entity.Total_without_discount;
+
+                await _dbContext.SaveChangesAsync();
+            }
+        }
+
         public async Task<ShoppingCart> FindShoppingCartAsync(Guid entityId)
         {
             return await _dbContext.ShoppingCarts.FirstOrDefaultAsync(p => p.AccountID == entityId);
